@@ -1,0 +1,19 @@
+{
+  "name": "smart-bus",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Node.js implementation of HDL SmartBus protocol",
+  "repository": "caligo-mentis/smart-bus",
+  "author": "Andrey Ivaschenko <andrey.ivashchenko@gmail.com>",
+
+  "main": "index.js",
+
+  "dependencies": {
+    "crc": "^3.3.0",
+    "debug": "^2.2.0"
+  },
+
+  "engines": {
+    "node": "^4.1.1"
+  }
+}
