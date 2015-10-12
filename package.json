@@ -7,10 +7,17 @@
   "author": "Andrey Ivaschenko <andrey.ivashchenko@gmail.com>",
 
   "main": "index.js",
+  "scripts": { "test": "mocha" },
 
   "dependencies": {
     "crc": "^3.3.0",
     "debug": "^2.2.0"
+  },
+
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "should": "^7.1.0",
+    "simple-mock": "^0.4.1"
   },
 
   "engines": {
