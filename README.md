@@ -14,7 +14,7 @@ var bus = new SmartBus({
   id: 50,                   // Device id for connector
   gateway: '192.168.1.250', // HDL SmartBus gateway IP
 
-  port: 6000,               // Listening port, default: 6000
+  port: 6000                // Listening port, default: 6000
 });
 ```
 
