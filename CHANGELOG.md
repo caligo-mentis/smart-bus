@@ -1,3 +1,7 @@
+## 0.1.1
+
+  * Support old versions of nodejs (>=0.12)
+
 ## 0.1.0
 
   Base features:
