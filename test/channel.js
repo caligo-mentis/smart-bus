@@ -59,7 +59,7 @@ describe('Channel', function() {
         should(send.lastCall.args[0]).equal(0x0031);
         should(send.lastCall.args[1]).eql({ time: 0, level: 100, channel: 1 });
 
-        should(device.listenerCount(0x0032)).be.exactly(0);
+        should(EventEmitter.listenerCount(device, 0x0032)).be.exactly(0);
 
         done();
       });
