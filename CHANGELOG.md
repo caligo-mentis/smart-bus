@@ -1,3 +1,7 @@
+## master
+
+  * Universal Switch Control command
+
 ## 0.1.1
 
   * Support old versions of nodejs (>=0.12)

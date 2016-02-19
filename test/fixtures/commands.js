@@ -13,5 +13,11 @@ module.exports = {
       data: new Buffer('06F532', 'hex'),
       object: { channel: 6, level: 50, success: false }
     }
+  ],
+
+  '0xE01C': [
+    { data: new Buffer('10FF', 'hex'), object: { switch: 16, status: true } },
+    { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } },
+  ]
   ]
 };
