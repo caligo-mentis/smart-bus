@@ -17,7 +17,7 @@ module.exports = {
 
   '0xE01C': [
     { data: new Buffer('10FF', 'hex'), object: { switch: 16, status: true } },
-    { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } },
+    { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } }
   ]
   ]
 };
