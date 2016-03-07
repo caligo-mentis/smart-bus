@@ -18,41 +18,59 @@ describe('Bus', function() {
     bus.socket.on('listening', done);
   });
 
-  afterEach(function() {
-    bus.socket.close();
-  });
+  afterEach(closeSocket);
 
   describe('initialization', function() {
-    it('should create instance with default port', function() {
-      should(bus).have.properties({
-        id: 50,
-        port: 6000,
-        type: 0xFFFE,
-        subnet: 1,
-        gateway: '192.0.2.100',
-        address: new Buffer([0, 0, 0, 0])
+    describe('open socket', function() {
+      // Close previous bus object socket
+      beforeEach(closeSocket);
+
+      it('should set properties', function() {
+        bus = new Bus({
+          id: 50,
+          subnet: 1,
+          gateway: '192.0.2.100'
+        });
+
+        should(bus).have.properties({
+          id: 50,
+          port: 6000,
+          type: 0xFFFE,
+          subnet: 1,
+          gateway: '192.0.2.100',
+          address: new Buffer([0, 0, 0, 0])
+        });
       });
 
-      should(bus.socket.address()).have.property('port', 6000);
-    });
+      it('should create instance with default port', function(done) {
+        bus = new Bus({
+          id: 50,
+          subnet: 1,
+          gateway: '192.0.2.100'
+        });
 
-    it('should open socket on given port', function(done) {
-      // Close previous socket
-      bus.socket.close();
+        bus.socket.on('listening', function() {
+          should(bus.socket.address()).have.property('port', 6000);
 
-      bus = new Bus({
-        id: 50,
-        subnet: 1,
-        port: 6500,
-        gateway: '192.0.2.100'
+          done();
+        });
       });
 
-      var socket = bus.socket;
+      it('should open socket on given port', function(done) {
+        bus = new Bus({
+          id: 50,
+          subnet: 1,
+          port: 6500,
+          gateway: '192.0.2.100'
+        });
 
-      socket.on('listening', function() {
-        should(socket.address()).have.property('port', 6500);
+        var socket = bus.socket;
 
-        done();
+        socket.on('listening', function() {
+          should(socket.address()).have.property('port', 6500);
+
+          done();
+        });
       });
     });
 
@@ -275,4 +293,12 @@ describe('Bus', function() {
         'A0E010202690032FFFF06F864B5A9', 'hex'));
     }
   });
+
+  function closeSocket(done) {
+    var socket = bus.socket;
+
+    socket.on('close', done);
+
+    socket.close();
+  }
 });

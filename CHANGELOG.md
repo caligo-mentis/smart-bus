@@ -1,6 +1,7 @@
 ## master
 
   * Universal Switch Control command
+  * Fix `Bus` object address initialization
 
 ## 0.1.1
 
