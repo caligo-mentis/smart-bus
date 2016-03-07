@@ -13,53 +13,93 @@ describe('Channel', function() {
 
   it('should create instance', function() {
     should(channel).have.properties({
+      level: undefined,
       number: 1,
       device: device
     });
   });
 
-  describe('level', function() {
-    it('should send command and wait for response', function(done) {
+  it('should inherit from event emitter', function() {
+    should(channel).be.an.instanceOf(EventEmitter);
+  });
+
+  describe('listen', function() {
+    var factory;
+
+    beforeEach(function() {
+      factory = simple.mock(device, 'channel');
+
+      Channel.listen(device);
+    });
+
+    it('should initialize device channel by event', function() {
+      factory.callFn(createChannel);
+
+      device.emit(0x0032, { channel: 2, success: true, level: 100 });
+
+      should(channel).have.property('level', 100);
+      should(factory.callCount).equal(1);
+
+      function createChannel(number) {
+        should(number).equal(2);
+
+        channel = new Channel(device, number);
+
+        return channel;
+      }
+    });
+
+    describe('channel events', function() {
+      beforeEach(function() {
+        factory.returnWith(channel);
+      });
+
+      it('should update channel level status', function() {
+        device.emit(0x0032, { channel: 1, success: true, level: 42 });
+
+        should(channel).have.property('level', 42);
+        should(factory.callCount).equal(1);
+      });
+
+      it('should not update level without success', function() {
+        channel.level = 100;
+
+        device.emit(0x0032, { channel: 1, success: false, level: 42 });
+
+        should(channel).have.property('level', 100);
+        should(factory.callCount).equal(0);
+      });
+    });
+  });
+
+  describe('control', function() {
+    it('should send channel control command', function(done) {
       var send = simple.mock(device, 'send').callback();
 
-      channel.level(100, function(err, response) {
+      channel.control(100, function(err) {
         should(send.lastCall.args[0]).equal(0x0031);
         should(send.lastCall.args[1]).eql({ time: 0, level: 100, channel: 1 });
 
-        should(response).eql({ channel: 1, success: true, level: 100 });
-
         done(err);
       });
-
-      device.emit(0x0032, { channel: 1, success: true, level: 100 });
     });
 
     it('should accept time option', function(done) {
       var send = simple.mock(device, 'send').callback();
 
-      channel.level(100, { time: 5 }, function(err, response) {
+      channel.control(100, { time: 5 }, function(err) {
         should(send.lastCall.args[0]).equal(0x0031);
         should(send.lastCall.args[1]).eql({ time: 5, level: 100, channel: 1 });
 
-        should(response).eql({ channel: 1, success: true, level: 100 });
-
         done(err);
       });
-
-      device.emit(0x0032, { channel: 1, success: true, level: 100 });
     });
 
-    it('should not wait response on error', function(done) {
-      var send = simple.mock(device, 'send').callbackWith(new Error());
+    it('should pass error', function(done) {
+      simple.mock(device, 'send').callbackWith(new Error());
 
-      channel.level(100, function(err, response) {
+      channel.control(100, function(err) {
         should(err).be.instanceOf(Error);
-        should(response).not.be.ok();
-
-        should(send.lastCall.args[0]).equal(0x0031);
-        should(send.lastCall.args[1]).eql({ time: 0, level: 100, channel: 1 });
-
-        should(EventEmitter.listenerCount(device, 0x0032)).be.exactly(0);
 
         done();
       });

@@ -24,6 +24,13 @@ describe('Device', function() {
     should(device).be.an.instanceOf(EventEmitter);
   });
 
+  it('should subscribe to channel events', function() {
+    var mock = simple.mock(Channel, 'listen');
+    var device = new Device(bus, 1, 30);
+
+    should(mock.lastCall.args[0]).equal(device);
+  });
+
   it('should send command to bus', function(done) {
     var data = { channel: 1, level: 100 };
     var send = simple.mock(bus, 'send').callback();

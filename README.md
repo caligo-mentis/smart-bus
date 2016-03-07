@@ -75,14 +75,24 @@ data object can not be encoded error will be passed into callback.
 
 ### DSL
 
-Manipulate device channel status.
+Initialize channel object
 
 ```js
 var dimmer = bus.device('1.4');
 var spotlights = dimmer.channel(2);
+```
+Listen to channel status event
 
-spotlights.level(100, { time: 5 }, function(err, response) { ... });
+```js
+spotlights.on('status', function() {
+  console.log('Spotlights level is %s', spotlights.level);
+});
 ```
 
-`level` function will send `0x0031` command and then pass
-contents of `0x0032` response into callback.
+Set device channel level value to 100 in 5 seconds
+
+```js
+spotlights.control(100, { time: 5 }, function(err) { ... });
+```
+
+`control` function will send `0x0031` command into bus.

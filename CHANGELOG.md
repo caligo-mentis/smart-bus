@@ -2,6 +2,10 @@
 
   * Universal Switch Control command
   * Fix `Bus` object address initialization
+  * Reimplement `Channel` class as `EventEmitter`
+
+**BREAKING:** `channel.level` is a simple property now,
+use `channel.control` function instead.
 
 ## 0.1.1
 
