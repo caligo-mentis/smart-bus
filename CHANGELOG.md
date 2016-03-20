@@ -1,5 +1,9 @@
 ## master
 
+
+
+## 0.2.0
+
   * Universal Switch Control command
   * Fix `Bus` object address initialization
   * Reimplement `Channel` class as `EventEmitter`
