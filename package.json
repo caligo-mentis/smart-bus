@@ -7,7 +7,10 @@
   "author": "Andrey Ivaschenko <andrey.ivashchenko@gmail.com>",
 
   "main": "index.js",
-  "scripts": { "test": "mocha" },
+  "scripts": {
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha"
+  },
 
   "dependencies": {
     "crc": "^3.3.0",
@@ -17,6 +20,7 @@
   "devDependencies": {
     "mocha": "^2.3.3",
     "should": "^7.1.0",
+    "istanbul": "^0.4.2",
     "simple-mock": "^0.4.1"
   },
 
