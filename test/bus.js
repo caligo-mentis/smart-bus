@@ -72,6 +72,31 @@ describe('Bus', function() {
           done();
         });
       });
+
+      it('should parse device address', function() {
+        bus = new Bus({
+          device: '1.60',
+          gateway: '192.168.1.250'
+        });
+
+        should(bus).have.properties({
+          id: 60,
+          port: 6000,
+          subnet: 1,
+          gateway: '192.168.1.250'
+        });
+      });
+
+      it('should parse connection string', function() {
+        bus = new Bus('hdl://1.50@192.0.2.100:7000');
+
+        should(bus).have.properties({
+          id: 50,
+          port: 7000,
+          subnet: 1,
+          gateway: '192.0.2.100'
+        });
+      });
     });
 
     it('should inherit from event emitter', function() {

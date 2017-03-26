@@ -1,6 +1,6 @@
 ## master
 
-
+  * URL syntax for configuration
 
 ## 0.2.0
 
