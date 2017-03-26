@@ -10,13 +10,22 @@ Create instance of SmartBus connector
 var SmartBus = require('smart-bus');
 
 var bus = new SmartBus({
-  subnet: 1,
-  id: 50,                   // Device id for connector
+  device: '1.50',           // Connector address in HDL network (subnet.id)
   gateway: '192.168.1.250', // HDL SmartBus gateway IP
-
-  port: 6000                // Listening port, default: 6000
+  port: 6000                // and port, default: 6000
 });
 ```
+
+Connector address could be defined either as string in `device` property,
+or as separate properties `subnet` and `id`. In addition to passing
+configuration as an object, you can use a url string:
+
+```js
+var bus = new SmartBus('hdl://1.50@192.168.1.250:6000');
+```
+
+HDL gateway port also would be used as listening port of udp server
+to receive broadcast messages.
 
 ### Receive commands
 
