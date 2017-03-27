@@ -1,3 +1,8 @@
+## master
+
+  * Add commands for Scene and Area
+  * Parse Universal Switch Control Response command
+
 ## 0.3.0
 
   * URL syntax for configuration
