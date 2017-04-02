@@ -14,13 +14,13 @@ describe('Commands', function() {
     describe(code, function() {
       it('should parse data', function() {
         examples.forEach(function(example) {
-          should(command.parser(example.data)).eql(example.object);
+          should(command.parse(example.data)).eql(example.object);
         });
       });
 
       it('should encode data', function() {
         examples.forEach(function(example) {
-          should(command.encoder(example.object)).eql(example.data);
+          should(command.encode(example.object)).eql(example.data);
         });
       });
     });

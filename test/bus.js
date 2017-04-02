@@ -195,7 +195,7 @@ describe('Bus', function() {
     it('should catch data encoding error', function(done) {
       bus.send('1.23', -1, { channel: 5 }, function(err) {
         should(err).have.property('message',
-          'Data encoder for command 0x00-1 not implemented');
+          'Data encoder for command 0x00-1 is not implemented');
 
         done();
       });
