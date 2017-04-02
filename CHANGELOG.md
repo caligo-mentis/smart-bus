@@ -1,4 +1,4 @@
-## master
+## 0.3.0
 
   * URL syntax for configuration
   * Send commands without additional data
