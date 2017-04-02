@@ -57,6 +57,16 @@ describe('Device', function() {
     });
   });
 
+  it('should have string representation', function() {
+    should(device.toString()).eql('1.20');
+  });
+
+  it('should have string representation for device without address', function() {
+    var device = new Device(bus);
+
+    should(device.toString()).eql('X.X');
+  });
+
   describe('channel', function() {
     var channel;
 

@@ -8,10 +8,13 @@ describe('Command', function() {
 
   beforeEach(function() {
     code = 0x0031;
-    data = { test: 'data' };
+    data = { level: 100 };
     buffer = new Buffer([1, 2, 3]);
     sender = { subnet: 1, id: 3 };
     target = { subnet: 1, id: 10 };
+
+    simple.mock(sender, 'toString').returnWith('1.3');
+    simple.mock(target, 'toString').returnWith('1.10');
   });
 
   afterEach(function() {
@@ -50,6 +53,12 @@ describe('Command', function() {
       should(command).have.properties({
         data: undefined
       });
+    });
+
+    it('should have string representation', function() {
+      command = new Command(code);
+
+      should(command.toString()).eql('X.X -> X.X 0x0031');
     });
   });
 
@@ -108,6 +117,26 @@ describe('Command', function() {
 
       should(command.message).eql(buffer);
     });
+
+    it('should have string representaion', function() {
+      command = new Command(code, {
+        sender: sender,
+        target: target,
+
+        data: data
+      });
+
+      should(command.toString()).eql('1.3 -> 1.10 0x0031: { level: 100 }');
+    });
+
+    it('should have string representation without additional data', function() {
+      command = new Command(0x0004, {
+        sender: sender,
+        target: target
+      });
+
+      should(command.toString()).eql('1.3 -> 1.10 0x0004');
+    });
   });
 
   describe('unknown command', function() {
@@ -146,6 +175,17 @@ describe('Command', function() {
       should(function() {
         command.message;
       }).throw('Data encoder for command 0x0031 is not implemented');
+    });
+
+    it('should have string representation', function() {
+      command = new Command(code, {
+        sender: sender,
+        target: target,
+
+        data: buffer
+      });
+
+      should(command.toString()).eql('1.3 -> 1.10 0x0031: 010203');
     });
   });
 });

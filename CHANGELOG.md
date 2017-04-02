@@ -2,6 +2,7 @@
 
   * URL syntax for configuration
   * Send commands without additional data
+  * Outgoing commands logging
 
 ## 0.2.0
 

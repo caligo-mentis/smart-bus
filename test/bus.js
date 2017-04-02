@@ -102,6 +102,10 @@ describe('Bus', function() {
     it('should inherit from event emitter', function() {
       should(bus).be.an.instanceOf(EventEmitter);
     });
+
+    it('should have string representation', function() {
+      should(bus.toString()).eql('1.50');
+    });
   });
 
   describe('device', function() {

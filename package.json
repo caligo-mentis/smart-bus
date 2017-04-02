@@ -14,7 +14,7 @@
 
   "dependencies": {
     "crc": "^3.3.0",
-    "debug": "^2.2.0"
+    "debug": "~2.6"
   },
 
   "devDependencies": {
