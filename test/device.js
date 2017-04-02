@@ -45,6 +45,28 @@ describe('Device', function() {
     });
   });
 
+  it('should send command without data', function(done) {
+    var send = simple.mock(bus, 'send').callback();
+
+    device.send(0x0004, function(err) {
+      should(send.callCount).equal(1);
+      should(send.lastCall.args[0]).equal(device);
+      should(send.lastCall.args[1]).eql(0x0004);
+
+      done(err);
+    });
+  });
+
+  it('should have string representation', function() {
+    should(device.toString()).eql('1.20');
+  });
+
+  it('should have string representation for device without address', function() {
+    var device = new Device(bus);
+
+    should(device.toString()).eql('X.X');
+  });
+
   describe('channel', function() {
     var channel;
 

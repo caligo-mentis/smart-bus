@@ -102,6 +102,10 @@ describe('Bus', function() {
     it('should inherit from event emitter', function() {
       should(bus).be.an.instanceOf(EventEmitter);
     });
+
+    it('should have string representation', function() {
+      should(bus.toString()).eql('1.50');
+    });
   });
 
   describe('device', function() {
@@ -195,9 +199,20 @@ describe('Bus', function() {
     it('should catch data encoding error', function(done) {
       bus.send('1.23', -1, { channel: 5 }, function(err) {
         should(err).have.property('message',
-          'Data encoder for command 0x00-1 not implemented');
+          'Data encoder for command 0x00-1 is not implemented');
 
         done();
+      });
+    });
+
+    it('should send command without additional data', function(done) {
+      bus.send('1.23', 0x0004, function(err) {
+        should(send.callCount).be.exactly(1);
+
+        should(send.lastCall.arg).eql(new Buffer('0000000048444C4D49524' +
+          '1434C45AAAA0B0132FFFE000401175360', 'hex'));
+
+        done(err);
       });
     });
   });
@@ -233,6 +248,19 @@ describe('Bus', function() {
         sender: bus.device('1.2'),
         target: bus.device('255.255'),
         data: { channel: 6, success: true, level: 100 }
+      });
+    });
+
+    it('should return command object without data', function() {
+      var command = bus.parse(new Buffer('C000026448444C4D49524' +
+          '1434C45AAAA0B0132FFFE000401175360', 'hex'));
+
+      should(command).be.an.instanceOf(Command);
+      should(command).have.properties({
+        code: 0x0004,
+        sender: bus.device('1.50'),
+        target: bus.device('1.23'),
+        data: undefined
       });
     });
   });

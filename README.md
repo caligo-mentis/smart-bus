@@ -68,6 +68,7 @@ sensor.on(0x1647, function(data, target) { ... });
 Use connector to send commands
 
 ```js
+bus.send('1.4', 0x0004, function(err) { ... });
 bus.send('1.4', 0x0031, { channel: 1, level: 100 }, function(err) { ... });
 ```
 
