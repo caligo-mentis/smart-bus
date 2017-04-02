@@ -45,6 +45,18 @@ describe('Device', function() {
     });
   });
 
+  it('should send command without data', function(done) {
+    var send = simple.mock(bus, 'send').callback();
+
+    device.send(0x0004, function(err) {
+      should(send.callCount).equal(1);
+      should(send.lastCall.args[0]).equal(device);
+      should(send.lastCall.args[1]).eql(0x0004);
+
+      done(err);
+    });
+  });
+
   describe('channel', function() {
     var channel;
 

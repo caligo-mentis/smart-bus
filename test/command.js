@@ -41,6 +41,16 @@ describe('Command', function() {
         data: data
       });
     });
+
+    it('should skip empty buffer as data', function() {
+      command = new Command(code, {
+        data: new Buffer(0)
+      });
+
+      should(command).have.properties({
+        data: undefined
+      });
+    });
   });
 
   describe('described command', function() {
@@ -86,6 +96,17 @@ describe('Command', function() {
 
       should(command.message).eql(buffer);
       should(encode.firstCall.arg).eql(data);
+    });
+
+    it('should encode message without data', function() {
+      command = new Command(code, {
+        sender: sender,
+        target: target
+      });
+
+      buffer = new Buffer('0B010300000031010A', 'hex');
+
+      should(command.message).eql(buffer);
     });
   });
 

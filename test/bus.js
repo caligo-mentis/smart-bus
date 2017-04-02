@@ -200,6 +200,17 @@ describe('Bus', function() {
         done();
       });
     });
+
+    it('should send command without additional data', function(done) {
+      bus.send('1.23', 0x0004, function(err) {
+        should(send.callCount).be.exactly(1);
+
+        should(send.lastCall.arg).eql(new Buffer('0000000048444C4D49524' +
+          '1434C45AAAA0B0132FFFE000401175360', 'hex'));
+
+        done(err);
+      });
+    });
   });
 
   describe('parse', function() {
@@ -233,6 +244,19 @@ describe('Bus', function() {
         sender: bus.device('1.2'),
         target: bus.device('255.255'),
         data: { channel: 6, success: true, level: 100 }
+      });
+    });
+
+    it('should return command object without data', function() {
+      var command = bus.parse(new Buffer('C000026448444C4D49524' +
+          '1434C45AAAA0B0132FFFE000401175360', 'hex'));
+
+      should(command).be.an.instanceOf(Command);
+      should(command).have.properties({
+        code: 0x0004,
+        sender: bus.device('1.50'),
+        target: bus.device('1.23'),
+        data: undefined
       });
     });
   });

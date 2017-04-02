@@ -1,6 +1,7 @@
 ## master
 
   * URL syntax for configuration
+  * Send commands without additional data
 
 ## 0.2.0
 
