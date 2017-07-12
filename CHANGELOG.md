@@ -1,6 +1,7 @@
 ## master
 
   * Add commands for Sequence, Scene and Area
+  * Add missing Channels commands
   * Parse Universal Switch Control Response command
 
 ## 0.3.0

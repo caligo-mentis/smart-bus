@@ -161,11 +161,13 @@ module.exports = {
 
   /* 4.3 Channels */
 
+  // 4.3.1 Single Channel Control
   '0x0031': {
     data: new Buffer('04640190', 'hex'),
     object: { channel: 4, level: 100, time: 400 }
   },
 
+  // 4.3.2 Response Single Channel Control
   '0x0032': [
     {
       data: new Buffer('0AF864', 'hex'),
@@ -176,6 +178,38 @@ module.exports = {
       object: { channel: 6, level: 50, success: false }
     }
   ],
+
+  // 4.3.3 Read Status of Channels
+  // '0x0033'
+
+  // 4.3.4 Response Read Status of Channels
+  '0x0034': {
+    data: new Buffer('06643250006428', 'hex'),
+    object: { channels: [
+      { number: 1, level: 100 },
+      { number: 2, level: 50 },
+      { number: 3, level: 80 },
+      { number: 4, level: 0 },
+      { number: 5, level: 100 },
+      { number: 6, level: 40 }
+    ] }
+  },
+
+  // 4.3.5 Read Current Level of Channels
+  // '0x0038'
+
+  // 4.3.6 Response Read Current Level of Channels
+  '0x0039': {
+    data: new Buffer('06643250006428', 'hex'),
+    object: { channels: [
+      { number: 1, level: 100 },
+      { number: 2, level: 50 },
+      { number: 3, level: 80 },
+      { number: 4, level: 0 },
+      { number: 5, level: 100 },
+      { number: 6, level: 40 }
+    ] }
+  },
 
   '0xE01C': [
     { data: new Buffer('10FF', 'hex'), object: { switch: 16, status: true } },
