@@ -1,6 +1,6 @@
 ## master
 
-  * Add commands for Scene and Area
+  * Add commands for Sequence, Scene and Area
   * Parse Universal Switch Control Response command
 
 ## 0.3.0

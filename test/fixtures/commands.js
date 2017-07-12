@@ -122,6 +122,42 @@ module.exports = {
 
   /* 4.2 Sequence */
 
+  // 4.2.1 Sequence Control
+  '0x001A': {
+    data: new Buffer('0102', 'hex'),
+    object: { area: 1, sequence: 2 }
+  },
+
+  // 4.2.2 Response Sequence Control
+  '0x001B': {
+    data: new Buffer('020A', 'hex'),
+    object: { area: 2, sequence: 10 }
+  },
+
+  // 4.2.3 Read Status of Sequence
+  '0xE014': {
+    data: new Buffer('08', 'hex'),
+    object: { area: 8 }
+  },
+
+  // 4.2.4 Response Read Status of Sequence
+  '0xE015': {
+    data: new Buffer('08A0', 'hex'),
+    object: { area: 8, sequence: 160 }
+  },
+
+  // 4.2.5 Broadcast Status of Sequence
+  '0xF036': {
+    data: new Buffer('0A050B370163', 'hex'),
+    object: { areas: [
+      { number: 1, sequence: 10 },
+      { number: 2, sequence: 5 },
+      { number: 3, sequence: 11 },
+      { number: 4, sequence: 55 },
+      { number: 5, sequence: 1 },
+      { number: 6, sequence: 99 }
+    ] }
+  },
 
   /* 4.3 Channels */
 
