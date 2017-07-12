@@ -211,13 +211,42 @@ module.exports = {
     ] }
   },
 
+  /* 6. Universal Switch */
+
+  // 6.1.1 UV Switch Control
   '0xE01C': [
     { data: new Buffer('10FF', 'hex'), object: { switch: 16, status: true } },
     { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } }
   ],
 
+  // 6.1.2 Response UV Switch Control
   '0xE01D': [
     { data: new Buffer('0A01', 'hex'), object: { switch: 10, status: true } },
     { data: new Buffer('0200', 'hex'), object: { switch: 2, status: false } }
-  ]
+  ],
+
+  // 6.1.3 Read Status of UV Switch
+  '0xE018': [
+    { data: new Buffer('0A', 'hex'), object: { switch: 10 } },
+    { data: new Buffer('05', 'hex'), object: { switch: 5 } }
+  ],
+
+  // 6.1.4 Response Read Status of UV Switch
+  '0xE019': [
+    { data: new Buffer('0A01', 'hex'), object: { switch: 10, status: true } },
+    { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } },
+  ],
+
+  // 6.1.5 Broadcast Status of Status of UV Switches
+  '0xE017': {
+    data: new Buffer('06010001010000', 'hex'),
+    object: { switches: [
+      { number: 1, status: true },
+      { number: 2, status: false },
+      { number: 3, status: true },
+      { number: 4, status: true },
+      { number: 5, status: false },
+      { number: 6, status: false }
+    ] }
+  }
 };
