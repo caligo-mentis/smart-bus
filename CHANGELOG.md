@@ -1,6 +1,6 @@
 ## master
 
-  * Add commands for Sequence, Scene and Area
+  * Add commands for Sequence, Scene, Area and Curtain Switch
   * Add Read Temperature commands
   * Add missing Channels and Universal Switch commands
 

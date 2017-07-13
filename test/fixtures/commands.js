@@ -250,6 +250,39 @@ module.exports = {
     ] }
   },
 
+  /* 7. Curtain Switch */
+
+  // 7.1.1 Curtain Switch Control
+  '0xE3E0': [
+    { data: new Buffer('0102', 'hex'), object: { curtain: 1, status: 2 } },
+    { data: new Buffer('115A', 'hex'), object: { curtain: 17, status: 90 } }
+  ],
+
+  // 7.1.2 Response Curtain Switch Control
+  '0xE3E1': [
+    { data: new Buffer('0102', 'hex'), object: { curtain: 1, status: 2 } },
+    { data: new Buffer('115A', 'hex'), object: { curtain: 17, status: 90 } },
+    { data: new Buffer('11EE', 'hex'), object: { curtain: 17, status: 238 } }
+  ],
+
+  // 7.1.3 Read Status of Curtain Switch
+  '0xE3E2': { data: new Buffer('04', 'hex'), object: { curtain: 4 } },
+
+  // 7.1.4 Response Read Status of Curtain Switch
+  '0xE3E3': [
+    { data: new Buffer('0102', 'hex'), object: { curtain: 1, status: 2 } },
+    { data: new Buffer('115A', 'hex'), object: { curtain: 17, status: 90 } }
+  ],
+
+  // 7.1.5 Broadcast Status of Status of Curtain Switches
+  '0xE3E4': {
+    data: new Buffer('00000201', 'hex'),
+    object: { curtains: [
+      { number: 1, level: 0, status: 2 },
+      { number: 2, level: 0, status: 1 }
+    ] }
+  },
+
   /* 13.1 Read Temperature */
 
   // 13.1.1 Read Temperature
