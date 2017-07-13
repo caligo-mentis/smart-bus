@@ -248,5 +248,61 @@ module.exports = {
       { number: 5, status: false },
       { number: 6, status: false }
     ] }
-  }
+  },
+
+  /* 13.1 Read Temperature */
+
+  // 13.1.1 Read Temperature
+  '0xE3E7': [
+    { data: new Buffer('01', 'hex'), object: { channel: 1 } },
+    { data: new Buffer('FF', 'hex'), object: { channel: 255 } }
+  ],
+
+  // 13.1.2 Response Read Temperature
+  '0xE3E8': [
+    {
+      data: new Buffer('0100', 'hex'),
+      object: { channel: 1, temperature: 0 }
+    },
+    {
+      data: new Buffer('0116', 'hex'),
+      object: { channel: 1, temperature: 22 }
+    },
+    {
+      data: new Buffer('018F', 'hex'),
+      object: { channel: 1, temperature: -15 }
+    },
+  ],
+
+  // 13.1.3 Broadcast Temperature
+  '0xE3E5': [
+    {
+      data: new Buffer('011B0000D841', 'hex'),
+      object: { channel: 1, temperature: 27 }
+    },
+    {
+      data: new Buffer('01190000C841', 'hex'),
+      object: { channel: 1, temperature: 25 }
+    }
+  ],
+
+  /* 13.2 Read Temperature New */
+
+  // 13.2.1 Read Temperature New
+  '0x1948': {
+    data: new Buffer('01', 'hex'),
+    object: { channel: 1 }
+  },
+
+  // 13.2.2 Response Temperature
+  '0x1949': [
+    {
+      data: new Buffer('019A99C141', 'hex'),
+      object: { channel: 1, temperature: 24.200000762939453 }
+    },
+    {
+      data: new Buffer('010000B441', 'hex'),
+      object: { channel: 1, temperature: 22.5 }
+    }
+  ]
 };

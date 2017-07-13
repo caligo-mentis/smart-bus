@@ -1,6 +1,7 @@
 ## master
 
   * Add commands for Sequence, Scene and Area
+  * Add Read Temperature commands
   * Add missing Channels and Universal Switch commands
 
 ## 0.3.0
