@@ -283,6 +283,111 @@ module.exports = {
     ] }
   },
 
+  /* 11.1 Floor Heating Control from DLP */
+
+  // 11.1.1 Read Floor Heating Status
+  // '0x1944'
+
+  // 11.1.2 Response Read Floor Heating Status
+  '0x1945': {
+    data: new Buffer('001800011414141401', 'hex'),
+    object: {
+      temperature: {
+        type: 0,
+        current: 24,
+        normal: 20,
+        day: 20,
+        night: 20,
+        away: 20
+      },
+      status: false,
+      mode: 1,
+      timer: 1
+    }
+  },
+
+  // 11.1.3 Control Floor Heating Status
+  '0x1946': {
+    data: new Buffer('00010116161412', 'hex'),
+    object: {
+      temperature: {
+        type: 0,
+        normal: 22,
+        day: 22,
+        night: 20,
+        away: 18
+      },
+      status: true,
+      mode: 1
+    }
+  },
+
+  // 11.1.4 Response Control Floor Heating Status
+  '0x1947': {
+    data: new Buffer('F800010116161412', 'hex'),
+    object: {
+      success: true,
+      temperature: {
+        type: 0,
+        normal: 22,
+        day: 22,
+        night: 20,
+        away: 18
+      },
+      status: true,
+      mode: 1
+    }
+  },
+
+  /* 11.2 Floor Heating Control from Floor Heating Module */
+
+  // 11.2.1 Read Floor Heating Status
+  '0x1C5E': [
+    { data: new Buffer('01', 'hex'), object: { channel: 1 } },
+    { data: new Buffer('0A', 'hex'), object: { channel: 10 } },
+  ],
+
+  // 11.2.2 Response Read Floor Heating Status
+  '0x1C5F': {
+    data: new Buffer('012100021818161400011E010A', 'hex'),
+    object: {
+      channel: 1,
+      work: { type: 2, status: true },
+      temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
+      mode: 2,
+      timer: 0,
+      valve: true,
+      PWD: 30,
+      watering: { type: 0, status: true, time: 10 }
+    }
+  },
+
+  // 11.2.3 Control Floor Heating Status
+  '0x1C5C': {
+    data: new Buffer('0121000218181614010A', 'hex'),
+    object: {
+      channel: 1,
+      work: { type: 2, status: true },
+      temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
+      mode: 2,
+      valve: true,
+      watering: { time: 10 }
+    }
+  },
+
+  // 11.2.4 Response Control Floor Heating Status
+  '0x1C5D': {
+    data: new Buffer('0121000218181614010A', 'hex'),
+    object: {
+      channel: 1,
+      work: { type: 2, status: true },
+      temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
+      mode: 2,
+      valve: true,
+      watering: { time: 10 }
+    }
+  },
+
   /* 13.1 Read Temperature */
 
   // 13.1.1 Read Temperature
