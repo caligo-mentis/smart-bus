@@ -1,4 +1,4 @@
-## master
+## 0.4.0
 
   * Add commands for Sequence, Scene, Area, Curtain Switch, Floor Heating,
     Panel Control, Sensors and Read Temperature sections of
