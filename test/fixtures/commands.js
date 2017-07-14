@@ -414,6 +414,121 @@ module.exports = {
     }
   },
 
+  /* 12.1 Read Sensors Status (8in1 DeviceType315) */
+
+  // 12.1.1 Read Sensors Status
+  '0xDB00': [
+    { data: new Buffer('01', 'hex'), object: { logic: 1 } },
+    { data: new Buffer('18', 'hex'), object: { logic: 24 } },
+  ],
+
+  // 12.1.2 Response Read Sensors Status
+  '0xDB01': {
+    data: new Buffer('010000010000012C', 'hex'),
+    object: {
+      movement: true,
+      delay: 300,
+      dryContacts: [
+        { number: 1, status: true },
+        { number: 2, status: false }
+      ]
+    }
+  },
+
+  /* 12.2 Read Sensors Status (8in1 DeviceType314) */
+
+  // 12.2.1 Read Sensors Status
+  // 0x1645
+
+  // 12.2.2 Response Read Sensors Status
+  '0x1646': [
+    {
+      data: new Buffer('F82D016A000000', 'hex'),
+      object: {
+        success: true,
+        temperature: 25,
+        brightness: 362,
+        movement: false,
+        dryContacts: [
+          { number: 1, status: false },
+          { number: 2, status: false }
+        ]
+      }
+    },
+    {
+      data: new Buffer('F82D016A01010000', 'hex'),
+      object: {
+        success: true,
+        temperature: 25,
+        brightness: 362,
+        movement: true,
+        sonic: true,
+        dryContacts: [
+          { number: 1, status: false },
+          { number: 2, status: false }
+        ]
+      }
+    }
+  ],
+
+  /* 12.3 Read Sensors Status (12in1) */
+
+  // Same codes as for 12.2
+
+  // 12.3.3 Broadcast Sensors Status Automatically
+  '0x1647': {
+    data: new Buffer('2D03F701000001', 'hex'),
+    object: {
+      temperature: 25,
+      brightness: 1015,
+      movement: true,
+      sonic: false,
+      dryContacts: [
+        { number: 1, status: false },
+        { number: 2, status: true }
+      ]
+    }
+  },
+
+  /* 12.4 Read Sensors Status (SensorsInOne) */
+
+  // 12.4.1 Read Sensors Status
+  // 0x1604
+
+  // 12.4.2 Response Read Sensors Status
+  '0x1605': {
+    data: new Buffer('F82C01080000010100', 'hex'),
+    object: {
+      success: true,
+      temperature: 24,
+      brightness: 264,
+      air: 0,
+      gas: 0,
+      movement: true,
+      dryContacts: [
+        { number: 1, status: true },
+        { number: 2, status: false }
+      ]
+    }
+  },
+
+  // 12.4.3 Broadcast Sensors Status
+  '0x1630': {
+    data: new Buffer('F82C01080000010100', 'hex'),
+    object: {
+      success: true,
+      temperature: 24,
+      brightness: 264,
+      air: 0,
+      gas: 0,
+      movement: true,
+      dryContacts: [
+        { number: 1, status: true },
+        { number: 2, status: false }
+      ]
+    }
+  },
+
   /* 13.1 Read Temperature */
 
   // 13.1.1 Read Temperature
