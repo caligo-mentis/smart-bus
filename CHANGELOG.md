@@ -1,7 +1,7 @@
 ## master
 
-  * Add commands for Sequence, Scene, Area, Curtain Switch and Floor Heating
-  * Add Read Temperature commands
+  * Add commands for Sequence, Scene, Area, Curtain Switch, Floor Heating,
+    Panel Control and Read Temperature sections of system specification
   * Add missing Channels and Universal Switch commands
 
 ## 0.3.0

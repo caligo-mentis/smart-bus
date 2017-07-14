@@ -283,6 +283,32 @@ module.exports = {
     ] }
   },
 
+  /* 9. Panel Control */
+
+  // 9.1.1 Panel Control
+  '0xE3D8': [
+    { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
+    { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
+  ],
+
+  // 9.1.2 Response Panel Control
+  '0xE3D9': [
+    { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
+    { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
+  ],
+
+  // 9.1.3 Read Status of Panel Control
+  '0xE3DA': [
+    { data: new Buffer('0D', 'hex'), object: { key: 13 } },
+    { data: new Buffer('0E', 'hex'), object: { key: 14 } }
+  ],
+
+  // 9.1.4 Response Read Status of Panel Control
+  '0xE3DB': [
+    { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
+    { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
+  ],
+
   /* 11.1 Floor Heating Control from DLP */
 
   // 11.1.1 Read Floor Heating Status
