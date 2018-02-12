@@ -211,6 +211,50 @@ module.exports = {
     ] }
   },
 
+  /* 5. Logic */
+
+  // 5.1.1 Logic Control
+  // 0xF116
+
+  // 5.1.2 Response Logic Control
+  // 0xF117
+
+  // 5.1.3 Read Status of Logic Control
+  // 0xF112
+
+  // 5.1.4 Response Read Status of Logic Control
+  // 0xF113
+
+  // 5.1.5 Broadcast Status of Status of Logic Control
+  // 0xF12F,
+
+  // 5.1.6 Read System Date and Time
+  // 0xDA00
+
+  // 5.1.7 Response Read System Date and Time
+  '0xDA01': {
+    data: new Buffer('F812020C16020E01', 'hex'),
+    object: { success: true, date: new Date(2018, 1, 12, 22, 02, 14) }
+  },
+
+  // 5.1.8 Modify Read System Date and Time
+  '0xDA02': {
+    data: new Buffer('12020C161B1D01', 'hex'),
+    object: { date: new Date(2018, 1, 12, 22, 27, 29) }
+  },
+
+  // 5.1.9 Response Modify Read System Date and Time
+  '0xDA03': [
+    { data: new Buffer('F8', 'hex'), object: { success: true } },
+    { data: new Buffer('F5', 'hex'), object: { success: false } },
+  ],
+
+  // 5.1.10 Broadcast System Date and Time (Every Minute)
+  '0xDA44': {
+    data: new Buffer('12020C162C27', 'hex'),
+    object: { date: new Date(2018, 1, 12, 22, 44, 39) }
+  },
+
   /* 6. Universal Switch */
 
   // 6.1.1 UV Switch Control
