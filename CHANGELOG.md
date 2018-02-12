@@ -1,3 +1,7 @@
+## 0.5.0
+
+  * Add Logic Control and Date Time commands
+
 ## 0.4.0
 
   * Add commands for Sequence, Scene, Area, Curtain Switch, Floor Heating,
