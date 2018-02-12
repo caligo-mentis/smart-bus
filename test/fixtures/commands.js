@@ -214,19 +214,34 @@ module.exports = {
   /* 5. Logic */
 
   // 5.1.1 Logic Control
-  // 0xF116
+  '0xF116': [
+    { data: new Buffer('0100', 'hex'), object: { block: 1, status: false } },
+    { data: new Buffer('FA01', 'hex'), object: { block: 250, status: true } },
+  ],
 
   // 5.1.2 Response Logic Control
-  // 0xF117
+  '0xF117': [
+    { data: new Buffer('0201', 'hex'), object: { block: 2, status: true } },
+    { data: new Buffer('FB00', 'hex'), object: { block: 251, status: false } },
+  ],
 
   // 5.1.3 Read Status of Logic Control
-  // 0xF112
+  '0xF112': [
+    { data: new Buffer('05', 'hex'), object: { block: 5 } },
+    { data: new Buffer('FF', 'hex'), object: { block: 255 } }
+  ],
 
   // 5.1.4 Response Read Status of Logic Control
-  // 0xF113
+  '0xF113': [
+    { data: new Buffer('0501', 'hex'), object: { block: 5, status: true } },
+    { data: new Buffer('F900', 'hex'), object: { block: 249, status: false } },
+  ],
 
   // 5.1.5 Broadcast Status of Status of Logic Control
-  // 0xF12F,
+  '0xF12F': [
+    { data: new Buffer('0101', 'hex'), object: { block: 1, status: true } },
+    { data: new Buffer('F501', 'hex'), object: { block: 245, status: true } },
+  ],
 
   // 5.1.6 Read System Date and Time
   // 0xDA00
