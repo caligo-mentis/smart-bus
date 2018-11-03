@@ -127,6 +127,14 @@ describe('Bus', function() {
     it('should have string representation', function() {
       should(bus.toString()).eql('1.50');
     });
+
+    it('should close socket on error', function(done) {
+      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+
+      bus.socket.on('close', done);
+
+      bus.socket.emit('error', new Error('Something went wrong'));
+    });
   });
 
   describe('device', function() {
