@@ -97,6 +97,27 @@ describe('Bus', function() {
           gateway: '192.0.2.100'
         });
       });
+
+      it('should reuse same socket address', function(done) {
+        var calls = 0;
+
+        bus = new Bus('hdl://1.50@192.0.2.100:6200');
+
+        bus.socket.on('listening', checkPort);
+
+        var secondBus = new Bus('hdl://1.51@192.0.2.100:6200');
+
+        secondBus.socket
+          .on('listening', checkPort)
+          .on('error', done)
+          .on('close', done);
+
+        function checkPort() {
+          should(this.address()).have.property('port', 6200);
+
+          if (++calls === 2) secondBus.socket.close();
+        }
+      });
     });
 
     it('should inherit from event emitter', function() {
