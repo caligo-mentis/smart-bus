@@ -368,6 +368,12 @@ describe('Bus', function() {
       should(handler.lastCall.args[1]).equal(bus.device('255.255'));
     });
 
+    it('should handle invalid message', function() {
+      should(function() {
+        bus.socket.emit('message', new Buffer('invalid'));
+      }).not.throw();
+    });
+
     function emitEvents() {
       bus.socket.emit('message', new Buffer('C000026448444C4D495241434C45AAA' +
         'A10010504550031010404640003000837', 'hex'));
