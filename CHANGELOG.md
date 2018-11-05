@@ -1,3 +1,7 @@
+## master
+
+  * Allow to reuse same UDP address
+
 ## 0.5.0
 
   * Add Logic Control and Date Time commands
