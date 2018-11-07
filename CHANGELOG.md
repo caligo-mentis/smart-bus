@@ -1,6 +1,7 @@
 ## master
 
   * Allow to reuse same UDP address
+  * Socket events on Bus instance
 
 ## 0.5.0
 

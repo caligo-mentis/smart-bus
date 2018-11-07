@@ -128,12 +128,17 @@ describe('Bus', function() {
       should(bus.toString()).eql('1.50');
     });
 
-    it('should close socket on error', function(done) {
+    it('should close socket on error and emit event', function(done) {
       var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+      var error = new Error('Something went wrong');
 
-      bus.socket.on('close', done);
+      bus.on('error', function(err) {
+        should(err).equal(error);
 
-      bus.socket.emit('error', new Error('Something went wrong'));
+        bus.on('close', done);
+      });
+
+      bus.socket.emit('error', error);
     });
 
     it('should emit listening event', function(done) {
