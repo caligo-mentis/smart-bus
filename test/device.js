@@ -57,6 +57,10 @@ describe('Device', function() {
     });
   });
 
+  it('should have an address', function() {
+    should(device.address).equal('1.20');
+  });
+
   it('should have string representation', function() {
     should(device.toString()).eql('1.20');
   });

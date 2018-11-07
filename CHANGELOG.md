@@ -1,8 +1,9 @@
 ## master
 
   * Allow to reuse same UDP address
-  * Socket events on Bus instance
+  * Socket events on `Bus` instance
   * Enable UDP broadcast
+  * Add address getter to `Device` instance
 
 ## 0.5.0
 
