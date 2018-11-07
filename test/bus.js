@@ -145,6 +145,29 @@ describe('Bus', function() {
         bus.socket.close();
       });
     });
+
+    it('should close socket', function(done) {
+      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+      var spy = simple.mock(bus.socket, 'close');
+      var callback = function() {};
+
+      bus.socket.on('close', function() {
+        should(spy.callCount).equal(1);
+        should(spy.lastCall.arg).equal(callback);
+
+        done();
+      });
+
+      bus.close(callback);
+    });
+
+    it('should emit close event', function(done) {
+      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+
+      bus.on('close', done);
+
+      bus.close();
+    });
   });
 
   describe('device', function() {
