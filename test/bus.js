@@ -135,6 +135,16 @@ describe('Bus', function() {
 
       bus.socket.emit('error', new Error('Something went wrong'));
     });
+
+    it('should emit listening event', function(done) {
+      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+
+      bus.on('listening', function() {
+        bus.socket.on('close', done);
+
+        bus.socket.close();
+      });
+    });
   });
 
   describe('device', function() {
