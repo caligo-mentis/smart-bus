@@ -173,6 +173,22 @@ describe('Bus', function() {
 
       bus.close();
     });
+
+    it('should set broadcast flag on socket', function(done) {
+      var bus = new Bus('hdl://1.50@192.0.1.255:6000');
+      var spy = simple.mock(bus.socket, 'setBroadcast');
+
+      bus.on('listening', function() {
+        bus.setBroadcast(true);
+
+        should(spy.callCount).equal(1);
+        should(spy.lastCall.arg).equal(true);
+
+        bus.on('close', done);
+
+        bus.close();
+      });
+    });
   });
 
   describe('device', function() {
@@ -289,9 +305,43 @@ describe('Bus', function() {
       should(bus.parse(new Buffer('TEST'))).equal(undefined);
     });
 
-    it('should ignore message from another gateway', function() {
+    it('should ignore message from another gateway by default', function() {
       should(bus.parse(new Buffer('C0A801FA48444C4D495241434C45AAAA0E010202' +
         '690032FFFF06F864B5A9', 'hex'))).equal(undefined);
+    });
+
+    it('should accept message from any gateway when broadcasting', function(done) {
+      var bus = new Bus('hdl://1.50@192.168.1.255:6000');
+
+      bus.on('listening', function() {
+        bus.setBroadcast(true);
+
+        should(bus.parse(new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
+          '10202690032FFFF06F864B5A9', 'hex'))).have.properties({
+          code: 0x0032,
+          sender: bus.device('1.2'),
+          target: bus.device('255.255')
+        });
+
+        bus.on('close', done);
+
+        bus.close();
+      });
+    });
+
+    it('should ignore message from another gateway if broadcast is off', function(done) {
+      var bus = new Bus('hdl://1.50@192.168.1.255:6000');
+
+      bus.on('listening', function() {
+        bus.setBroadcast(false);
+
+        should(bus.parse(new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
+          '10202690032FFFF06F864B5A9', 'hex'))).equal(undefined);
+
+        bus.on('close', done);
+
+        bus.close();
+      });
     });
 
     it('should initialize device type after parsing', function() {
