@@ -1,5 +1,7 @@
 language: node_js
-script: npm run coverage
+script: 
+  - npm run lint
+  - npm run coverage
 node_js:
   - "stable"
   - "4.1"

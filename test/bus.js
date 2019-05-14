@@ -316,8 +316,10 @@ describe('Bus', function() {
       bus.on('listening', function() {
         bus.setBroadcast(true);
 
-        should(bus.parse(new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
-          '10202690032FFFF06F864B5A9', 'hex'))).have.properties({
+        var data = new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
+          '10202690032FFFF06F864B5A9', 'hex');
+
+        should(bus.parse(data)).have.properties({
           code: 0x0032,
           sender: bus.device('1.2'),
           target: bus.device('255.255')
