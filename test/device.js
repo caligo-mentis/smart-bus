@@ -9,7 +9,10 @@ describe('Device', function() {
 
   beforeEach(function() {
     bus = {};
-    device = new Device(bus, 1, 20);
+    device = new Device(bus, {
+      subnet: 1,
+      id: 20
+    });
   });
 
   it('should create instance', function() {
@@ -26,7 +29,10 @@ describe('Device', function() {
 
   it('should subscribe to channel events', function() {
     var mock = simple.mock(Channel, 'listen');
-    var device = new Device(bus, 1, 30);
+    var device = new Device(bus, {
+      subnet: 1,
+      id: 30
+    });
 
     should(mock.lastCall.args[0]).equal(device);
   });
@@ -35,11 +41,17 @@ describe('Device', function() {
     var data = { channel: 1, level: 100 };
     var send = simple.mock(bus, 'send').callback();
 
-    device.send(0x0031, data, function(err) {
+    device.send({
+      command: 0x0031,
+      data: data
+    }, function(err) {
       should(send.callCount).equal(1);
-      should(send.lastCall.args[0]).equal(device);
-      should(send.lastCall.args[1]).eql(0x0031);
-      should(send.lastCall.args[2]).equal(data);
+
+      var options = send.lastCall.args[0];
+
+      should(options.target).equal(device);
+      should(options.command).eql(0x0031);
+      should(options.data).equal(data);
 
       done(err);
     });
@@ -48,10 +60,13 @@ describe('Device', function() {
   it('should send command without data', function(done) {
     var send = simple.mock(bus, 'send').callback();
 
-    device.send(0x0004, function(err) {
+    device.send({ command: 0x0004 }, function(err) {
       should(send.callCount).equal(1);
-      should(send.lastCall.args[0]).equal(device);
-      should(send.lastCall.args[1]).eql(0x0004);
+
+      var options = send.lastCall.args[0];
+
+      should(options.target).equal(device);
+      should(options.command).eql(0x0004);
 
       done(err);
     });

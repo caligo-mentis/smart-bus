@@ -90,8 +90,20 @@ sensor.on(0x1647, function(data, target) { ... });
 Use connector to send commands
 
 ```js
-bus.send('1.4', 0x0004, function(err) { ... });
-bus.send('1.4', 0x0031, { channel: 1, level: 100 }, function(err) { ... });
+bus.send({
+  target: '1.4',
+  command: 0x0004
+}, callback);
+
+bus.send({
+  target: '1.4',
+  command: 0x0031,
+  data: { channel: 1, level: 100 }
+}, callback);
+
+function callback(err) {
+  // Command sent...
+}
 ```
 
 Or use device object
@@ -99,7 +111,14 @@ Or use device object
 ```js
 var logic = bus.device('1.10');
 
-logic.send(0xE01C, { switch: 1, status: 1 }, function(err) { ... });
+logic.send({
+  command: 0xE01C,
+  data: { switch: 1, status: 1 }
+}, callback);
+
+function callback(err) {
+  // Command sent...
+}
 ```
 
 Both `send` methods accepts raw `Buffer` as data object. In case if
@@ -124,7 +143,10 @@ spotlights.on('status', function() {
 Set device channel level value to 100 in 5 seconds
 
 ```js
-spotlights.control(100, { time: 5 }, function(err) { ... });
+spotlights.control({
+  level: 100,
+  time: 5
+}, function(err) { /* ... */ });
 ```
 
 `control` function will send `0x0031` command into bus.

@@ -8,7 +8,7 @@ describe('Channel', function() {
 
   beforeEach(function() {
     device = new EventEmitter();
-    channel = new Channel(device, 1);
+    channel = new Channel(device, { number: 1 });
   });
 
   it('should create instance', function() {
@@ -43,7 +43,7 @@ describe('Channel', function() {
       function createChannel(number) {
         should(number).equal(2);
 
-        channel = new Channel(device, number);
+        channel = new Channel(device, { number: number });
 
         return channel;
       }
@@ -76,7 +76,7 @@ describe('Channel', function() {
     it('should send channel control command', function(done) {
       var send = simple.mock(device, 'send').callback();
 
-      channel.control(100, function(err) {
+      channel.control({ level: 100 }, function(err) {
         should(send.lastCall.args[0]).equal(0x0031);
         should(send.lastCall.args[1]).eql({ time: 0, level: 100, channel: 1 });
 
@@ -87,7 +87,7 @@ describe('Channel', function() {
     it('should accept time option', function(done) {
       var send = simple.mock(device, 'send').callback();
 
-      channel.control(100, { time: 5 }, function(err) {
+      channel.control({ level: 100, time: 5 }, function(err) {
         should(send.lastCall.args[0]).equal(0x0031);
         should(send.lastCall.args[1]).eql({ time: 5, level: 100, channel: 1 });
 
@@ -98,7 +98,7 @@ describe('Channel', function() {
     it('should pass error', function(done) {
       simple.mock(device, 'send').callbackWith(new Error());
 
-      channel.control(100, function(err) {
+      channel.control({ level: 100 }, function(err) {
         should(err).be.instanceOf(Error);
 
         done();

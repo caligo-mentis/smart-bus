@@ -209,7 +209,7 @@ describe('Bus', function() {
     });
 
     it('should initialize device with subnet and id', function() {
-      device = bus.device(1, 35);
+      device = bus.device({ subnet: 1, id: 35 });
 
       should(device).be.an.instanceOf(Device);
       should(device).have.properties({
@@ -221,7 +221,7 @@ describe('Bus', function() {
     });
 
     it('should cache device instance', function() {
-      should(bus.device(1, 25)).equal(device);
+      should(bus.device({ subnet: 1, id: 25 })).equal(device);
     });
   });
 
@@ -233,7 +233,11 @@ describe('Bus', function() {
     });
 
     it('should send command to device by address', function(done) {
-      bus.send('1.40', 0x0031, { channel: 1, level: 100 }, function(err) {
+      bus.send({
+        target: '1.40',
+        command: 0x0031,
+        data: { channel: 1, level: 100 }
+      }, function(err) {
         should(send.callCount).be.exactly(1);
 
         should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
@@ -248,9 +252,13 @@ describe('Bus', function() {
     });
 
     it('should send command to device object', function(done) {
-      var device = bus.device(1, 30);
+      var target = bus.device({ subnet: 1, id: 30 });
 
-      bus.send(device, 0x0031, { channel: 5, level: 100 }, function(err) {
+      bus.send({
+        target: target,
+        command: 0x0031,
+        data: { channel: 5, level: 100 }
+      }, function(err) {
         should(send.callCount).be.exactly(1);
 
         should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
@@ -265,7 +273,11 @@ describe('Bus', function() {
     });
 
     it('should accept raw buffer as data', function(done) {
-      bus.send('1.23', 0x0031, new Buffer('01640000', 'hex'), function(err) {
+      bus.send({
+        target: '1.23',
+        command: 0x0031,
+        data: new Buffer('01640000', 'hex')
+      }, function(err) {
         should(send.callCount).be.exactly(1);
 
         should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
@@ -280,7 +292,11 @@ describe('Bus', function() {
     });
 
     it('should catch data encoding error', function(done) {
-      bus.send('1.23', -1, { channel: 5 }, function(err) {
+      bus.send({
+        target: '1.23',
+        command: -1,
+        data: { channel: 5 }
+      }, function(err) {
         should(err).have.property('message',
           'Data encoder for command 0x00-1 is not implemented');
 
@@ -289,7 +305,10 @@ describe('Bus', function() {
     });
 
     it('should send command without additional data', function(done) {
-      bus.send('1.23', 0x0004, function(err) {
+      bus.send({
+        target: '1.23',
+        command: 0x0004
+      }, function(err) {
         should(send.callCount).be.exactly(1);
 
         should(send.lastCall.arg).eql(new Buffer('0000000048444C4D49524' +

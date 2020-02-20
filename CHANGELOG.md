@@ -4,6 +4,11 @@
   * Socket events on `Bus` instance
   * Enable UDP broadcast
   * Add address getter to `Device` instance
+  * New API functions signature
+
+**BREAKING:** `bus.device()`, `bus.send()`, `device.send()` and
+`channel.control()` functions have new signature.
+Check [`README.md`](README.md#send-commands) for details.
 
 ## 0.5.2
 
