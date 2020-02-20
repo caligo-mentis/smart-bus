@@ -1,6 +1,6 @@
 {
   "name": "smart-bus",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "license": "MIT",
   "description": "Node.js implementation of HDL SmartBus protocol",
   "repository": "caligo-mentis/smart-bus",
