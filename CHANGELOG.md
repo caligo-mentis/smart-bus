@@ -1,3 +1,7 @@
+## 0.5.1
+
+  * Parse only integer part of temperature value for 0xE3E5 (#11)
+
 ## 0.5.0
 
   * Add Logic Control and Date Time commands
