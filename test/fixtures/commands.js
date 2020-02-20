@@ -615,11 +615,19 @@ module.exports = {
   // 13.1.3 Broadcast Temperature
   '0xE3E5': [
     {
-      data: new Buffer('011B0000D841', 'hex'),
-      object: { channel: 1, temperature: 27 }
+      data: new Buffer('0189', 'hex'),
+      object: { channel: 1, temperature: -9 }
     },
     {
-      data: new Buffer('01190000C841', 'hex'),
+      data: new Buffer('0100', 'hex'),
+      object: { channel: 1, temperature: 0 }
+    },
+    {
+      data: new Buffer('0105', 'hex'),
+      object: { channel: 1, temperature: 5 }
+    },
+    {
+      data: new Buffer('0119', 'hex'),
       object: { channel: 1, temperature: 25 }
     }
   ],
