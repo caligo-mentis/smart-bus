@@ -86,6 +86,16 @@ describe('Device', function() {
     should(device.toString()).eql('X.X');
   });
 
+  it('should create device with custom type', function() {
+    var device = new Device(bus, {
+      subnet: 1,
+      id: 60,
+      type: 0xFFFE
+    });
+
+    should(device.type).eql(0xFFFE);
+  });
+
   describe('channel', function() {
     var channel;
 

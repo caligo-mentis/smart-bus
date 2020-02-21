@@ -220,6 +220,32 @@ describe('Bus', function() {
       });
     });
 
+    it('should intialize device with address option', function() {
+      device = bus.device({ address: '1.50' });
+
+      should(device).be.an.instanceOf(Device);
+      should(device).have.properties({
+        id: 50,
+        subnet: 1,
+
+        bus: bus
+      });
+    });
+
+    it('should initialize device with custom type', function() {
+      device = bus.device({ address: '1.50', type: 0xFFFE });
+
+      should(device).be.an.instanceOf(Device);
+      should(device).have.properties({
+        id: 50,
+        subnet: 1,
+
+        type: 0xFFFE,
+
+        bus: bus
+      });
+    });
+
     it('should cache device instance', function() {
       should(bus.device({ subnet: 1, id: 25 })).equal(device);
     });
@@ -368,7 +394,21 @@ describe('Bus', function() {
     it('should initialize device type after parsing', function() {
       var device = bus.device('1.2');
 
-      should(device.type).equal(null);
+      should(device.type).equal(undefined);
+
+      bus.parse(new Buffer('C000026448444C4D495241434C45AAAA0E010202' +
+        '690032FFFF06F864B5A9', 'hex'));
+
+      should(device.type).eql(0x0269);
+    });
+
+    it('should overwrite device type after parsing', function() {
+      var device = bus.device({
+        address: '1.2',
+        type: 0xFFFE
+      });
+
+      should(device.type).equal(0xFFFE);
 
       bus.parse(new Buffer('C000026448444C4D495241434C45AAAA0E010202' +
         '690032FFFF06F864B5A9', 'hex'));
