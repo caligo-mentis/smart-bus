@@ -5,13 +5,18 @@ var Channel = require('../lib/channel');
 var EventEmitter = require('events');
 
 describe('Device', function() {
-  var bus, device;
+  var bus, device, target;
 
   beforeEach(function() {
     bus = {};
     device = new Device(bus, {
       subnet: 1,
       id: 20
+    });
+
+    target = new Device(bus, {
+      subnet: 1,
+      id: 40
     });
   });
 
@@ -42,6 +47,7 @@ describe('Device', function() {
     var send = simple.mock(bus, 'send').callback();
 
     device.send({
+      target: target,
       command: 0x0031,
       data: data
     }, function(err) {
@@ -49,7 +55,8 @@ describe('Device', function() {
 
       var options = send.lastCall.args[0];
 
-      should(options.target).equal(device);
+      should(options.sender).equal(device);
+      should(options.target).equal(target);
       should(options.command).eql(0x0031);
       should(options.data).equal(data);
 
@@ -60,12 +67,35 @@ describe('Device', function() {
   it('should send command without data', function(done) {
     var send = simple.mock(bus, 'send').callback();
 
-    device.send({ command: 0x0004 }, function(err) {
+    device.send({
+      target: target,
+      command: 0x0004
+    }, function(err) {
       should(send.callCount).equal(1);
 
       var options = send.lastCall.args[0];
 
-      should(options.target).equal(device);
+      should(options.sender).equal(device);
+      should(options.target).equal(target);
+      should(options.command).eql(0x0004);
+
+      done(err);
+    });
+  });
+
+  it('should send command to target by address', function(done) {
+    var send = simple.mock(bus, 'send').callback();
+
+    device.send({
+      target: '1.30',
+      command: 0x0004
+    }, function(err) {
+      should(send.callCount).equal(1);
+
+      var options = send.lastCall.args[0];
+
+      should(options.sender).equal(device);
+      should(options.target).equal('1.30');
       should(options.command).eql(0x0004);
 
       done(err);

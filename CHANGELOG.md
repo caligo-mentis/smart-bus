@@ -5,10 +5,24 @@
   * Enable UDP broadcast
   * Add address getter to `Device` instance
   * New API functions signature
+  * Sender device decoupled from `Bus` class
 
-**BREAKING:** `bus.device()`, `bus.send()`, `device.send()` and
-`channel.control()` functions have new signature.
-Check [`README.md`](README.md#send-commands) for details.
+**BREAKING:**
+
+  - `bus.device()`, `bus.send()`, `device.send()` and
+    `channel.control()` functions have new signature;
+  - `device.send()` method now sends command **from** device
+    to target;
+
+    Refer to [`Send commands`](README.md#send-commands)
+    readme section for details.
+
+  - Now `Bus` object represents only and udp socket,
+    sender device could be any device and must be initalized
+    separately;
+
+    Refer to [`Initialization`](README.md#initialization)
+    readme section for details.
 
 ## 0.5.2
 

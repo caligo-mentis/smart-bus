@@ -9,11 +9,7 @@ describe('Bus', function() {
   var bus;
 
   beforeEach(function(done) {
-    bus = new Bus({
-      id: 50,
-      subnet: 1,
-      gateway: '192.0.2.100'
-    });
+    bus = new Bus({ gateway: '192.0.2.100' });
 
     bus.socket.on('listening', done);
   });
@@ -26,28 +22,17 @@ describe('Bus', function() {
       beforeEach(closeSocket);
 
       it('should set properties', function() {
-        bus = new Bus({
-          id: 50,
-          subnet: 1,
-          gateway: '192.0.2.100'
-        });
+        bus = new Bus({ gateway: '192.0.2.100' });
 
         should(bus).have.properties({
-          id: 50,
           port: 6000,
-          type: 0xFFFE,
-          subnet: 1,
           gateway: '192.0.2.100',
           address: new Buffer([0, 0, 0, 0])
         });
       });
 
       it('should create instance with default port', function(done) {
-        bus = new Bus({
-          id: 50,
-          subnet: 1,
-          gateway: '192.0.2.100'
-        });
+        bus = new Bus({ gateway: '192.0.2.100' });
 
         bus.socket.on('listening', function() {
           should(bus.socket.address()).have.property('port', 6000);
@@ -57,12 +42,7 @@ describe('Bus', function() {
       });
 
       it('should open socket on given port', function(done) {
-        bus = new Bus({
-          id: 50,
-          subnet: 1,
-          port: 6500,
-          gateway: '192.0.2.100'
-        });
+        bus = new Bus({ port: 6500, gateway: '192.0.2.100' });
 
         var socket = bus.socket;
 
@@ -73,27 +53,11 @@ describe('Bus', function() {
         });
       });
 
-      it('should parse device address', function() {
-        bus = new Bus({
-          device: '1.60',
-          gateway: '192.168.1.250'
-        });
-
-        should(bus).have.properties({
-          id: 60,
-          port: 6000,
-          subnet: 1,
-          gateway: '192.168.1.250'
-        });
-      });
-
       it('should parse connection string', function() {
-        bus = new Bus('hdl://1.50@192.0.2.100:7000');
+        bus = new Bus('hdl://192.0.2.100:7000');
 
         should(bus).have.properties({
-          id: 50,
           port: 7000,
-          subnet: 1,
           gateway: '192.0.2.100'
         });
       });
@@ -101,11 +65,11 @@ describe('Bus', function() {
       it('should reuse same socket address', function(done) {
         var calls = 0;
 
-        bus = new Bus('hdl://1.50@192.0.2.100:6200');
+        bus = new Bus('hdl://192.0.2.100:6200');
 
         bus.socket.on('listening', checkPort);
 
-        var secondBus = new Bus('hdl://1.51@192.0.2.100:6200');
+        var secondBus = new Bus('hdl://192.0.2.100:6200');
 
         secondBus.socket
           .on('listening', checkPort)
@@ -124,12 +88,8 @@ describe('Bus', function() {
       should(bus).be.an.instanceOf(EventEmitter);
     });
 
-    it('should have string representation', function() {
-      should(bus.toString()).eql('1.50');
-    });
-
     it('should close socket on error and emit event', function(done) {
-      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+      var bus = new Bus('hdl://192.0.2.100:6300');
       var error = new Error('Something went wrong');
 
       bus.on('error', function(err) {
@@ -142,7 +102,7 @@ describe('Bus', function() {
     });
 
     it('should emit listening event', function(done) {
-      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+      var bus = new Bus('hdl://192.0.2.100:6300');
 
       bus.on('listening', function() {
         bus.socket.on('close', done);
@@ -152,7 +112,7 @@ describe('Bus', function() {
     });
 
     it('should close socket', function(done) {
-      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+      var bus = new Bus('hdl://192.0.2.100:6300');
       var spy = simple.mock(bus.socket, 'close');
       var callback = function() {};
 
@@ -167,7 +127,7 @@ describe('Bus', function() {
     });
 
     it('should emit close event', function(done) {
-      var bus = new Bus('hdl://1.50@192.0.2.100:6300');
+      var bus = new Bus('hdl://192.0.2.100:6300');
 
       bus.on('close', done);
 
@@ -175,7 +135,7 @@ describe('Bus', function() {
     });
 
     it('should set broadcast flag on socket', function(done) {
-      var bus = new Bus('hdl://1.50@192.0.1.255:6000');
+      var bus = new Bus('hdl://192.0.1.255:6000');
       var spy = simple.mock(bus.socket, 'setBroadcast');
 
       bus.on('listening', function() {
@@ -251,15 +211,55 @@ describe('Bus', function() {
     });
   });
 
+  describe('controller', function() {
+    var controller;
+
+    beforeEach(function() {
+      controller = bus.controller('1.50');
+    });
+
+    it('should create device with type 0xFFFE', function() {
+      should(controller).be.instanceOf(Device);
+      should(controller.type).eql(0xFFFE);
+    });
+
+    it('should cache controller instance', function() {
+      should(bus.device('1.50')).equal(controller);
+    });
+
+    it('should get address from options', function() {
+      controller = bus.controller({ address: '1.45' });
+
+      should(controller.subnet).eql(1);
+      should(controller.id).eql(45);
+    });
+
+    it('should get subnet and id from options', function() {
+      controller = bus.controller({ subnet: 1, id: 42 });
+
+      should(controller.subnet).eql(1);
+      should(controller.id).eql(42);
+    });
+
+    it('should ignore type option', function() {
+      controller = bus.controller({ address: '1.46', type: 0xFFFF });
+
+      should(controller.type).eql(0xFFFE);
+    });
+  });
+
   describe('send', function() {
-    var send;
+    var send, sender;
 
     beforeEach(function() {
       send = simple.mock(bus.socket, 'send').callback();
+
+      sender = bus.device({ address: '1.50', type: 0xFFFE });
     });
 
     it('should send command to device by address', function(done) {
       bus.send({
+        sender: '1.50',
         target: '1.40',
         command: 0x0031,
         data: { channel: 1, level: 100 }
@@ -281,6 +281,7 @@ describe('Bus', function() {
       var target = bus.device({ subnet: 1, id: 30 });
 
       bus.send({
+        sender: sender,
         target: target,
         command: 0x0031,
         data: { channel: 5, level: 100 }
@@ -300,6 +301,7 @@ describe('Bus', function() {
 
     it('should accept raw buffer as data', function(done) {
       bus.send({
+        sender: sender,
         target: '1.23',
         command: 0x0031,
         data: new Buffer('01640000', 'hex')
@@ -319,6 +321,7 @@ describe('Bus', function() {
 
     it('should catch data encoding error', function(done) {
       bus.send({
+        sender: sender,
         target: '1.23',
         command: -1,
         data: { channel: 5 }
@@ -332,6 +335,7 @@ describe('Bus', function() {
 
     it('should send command without additional data', function(done) {
       bus.send({
+        sender: sender,
         target: '1.23',
         command: 0x0004
       }, function(err) {
@@ -356,7 +360,7 @@ describe('Bus', function() {
     });
 
     it('should accept message from any gateway when broadcasting', function(done) {
-      var bus = new Bus('hdl://1.50@192.168.1.255:6000');
+      var bus = new Bus('hdl://192.168.1.255:6000');
 
       bus.on('listening', function() {
         bus.setBroadcast(true);
@@ -377,7 +381,7 @@ describe('Bus', function() {
     });
 
     it('should ignore message from another gateway if broadcast is off', function(done) {
-      var bus = new Bus('hdl://1.50@192.168.1.255:6000');
+      var bus = new Bus('hdl://192.168.1.255:6000');
 
       bus.on('listening', function() {
         bus.setBroadcast(false);
