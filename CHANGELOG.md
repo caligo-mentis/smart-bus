@@ -7,11 +7,12 @@
   * New API functions signature
   * Sender device decoupled from `Bus` class
   * Events on `Device` provides command object as a payload
+  * `Channel` DSL removed
 
 **BREAKING:**
 
-  - `bus.device()`, `bus.send()`, `device.send()` and
-    `channel.control()` functions have new signature;
+  - `bus.device()`, `bus.send()` and `device.send()` functions
+    have new signature;
   - `device.send()` method now sends command **from** device
     to target;
 
@@ -26,6 +27,11 @@
     readme section for details.
 
   - Events on `Device` instance have same payload as events on `Bus`;
+
+  - `device.channel()` abstraction removed, listen for events manually;
+
+    Refer to [`Complete example`](README.md#complete-example)
+    readme section for details.
 
 ## 0.5.2
 

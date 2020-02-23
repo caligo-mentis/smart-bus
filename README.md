@@ -188,32 +188,47 @@ bus.send({
 }, function(err) { /* ... */ });
 ```
 
-### DSL
+### Complete example
 
-Initialize channel object
+Usually modifier HDL commands have corresponding response commands.
+Use them to keep an actual state of HDL devices:
 
 ```js
+// Create UDP socket with HDL IP gateway
+var bus = new SmartBus('hdl://192.168.1.250:6000');
+
+// Initialize controller device
+var controller = bus.controller('1.50');
+
+// Initialize dimmer device
 var dimmer = bus.device('1.4');
-var spotlights = dimmer.channel(2);
-```
-Listen to channel status event
 
-```js
-spotlights.on('status', function() {
-  console.log('Spotlights level is %s', spotlights.level);
+// Setup listener for "Response Single Channel Control" command
+dimmer.on(0x0032, function(command) {
+  var data = command.data;
+
+  var success = data.success;
+  var channel = data.channel;
+  var level = data.level;
+
+  if (success) console.log('Channel #%d level is %d', channel, level);
+  else console.log('Failed to change level of #%d channel', channel);
+});
+
+// Send "Single Channel Control" command to dimmer
+controller.send({
+  target: dimmer,
+  command: 0x0031,
+  data: { channel: 1, level: 100, time: 5 }
+}, function(err) {
+  if (err) console.error('Failed to send command');
+  else console.log('Sent command 0x0031 to %s', dimmer);
 });
 ```
 
-Set device channel level value to 100 in 5 seconds
-
-```js
-spotlights.control({
-  level: 100,
-  time: 5
-}, function(err) { /* ... */ });
-```
-
-`control` function will send `0x0031` command into bus.
+Refer to "Operation Code of HDL Buspro" (could be found on the internet)
+document for complete list of commands or analyze you own setup using
+[`debug`](README.md#debugging) mode.
 
 ### Graceful shutdown
 
@@ -240,4 +255,16 @@ bus.on('close', function() {
   // Shutdown process with error code
   process.exit(err ? 1 : 0);
 });
+```
+
+### Debugging
+
+This package uses [`debug`](https://www.npmjs.com/package/debug) utility
+and streams all intercepted via HDL IP gateway commands into console when
+`DEBUG` environment variable contains `smart-bus` string.
+
+Run your script with defined `DEBUG` environment variable to get output:
+
+```sh
+$ DEBUG=smart-bus node your-script.js
 ```

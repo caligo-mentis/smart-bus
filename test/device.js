@@ -1,7 +1,6 @@
 var should = require('should');
 var simple = require('simple-mock');
 var Device = require('../lib/device');
-var Channel = require('../lib/channel');
 var EventEmitter = require('events');
 
 describe('Device', function() {
@@ -30,16 +29,6 @@ describe('Device', function() {
 
   it('should inherit from event emitter', function() {
     should(device).be.an.instanceOf(EventEmitter);
-  });
-
-  it('should subscribe to channel events', function() {
-    var mock = simple.mock(Channel, 'listen');
-    var device = new Device(bus, {
-      subnet: 1,
-      id: 30
-    });
-
-    should(mock.lastCall.args[0]).equal(device);
   });
 
   it('should send command to bus', function(done) {
@@ -124,25 +113,5 @@ describe('Device', function() {
     });
 
     should(device.type).eql(0xFFFE);
-  });
-
-  describe('channel', function() {
-    var channel;
-
-    beforeEach(function() {
-      channel = device.channel(1);
-    });
-
-    it('should initialize channel', function() {
-      should(channel).be.an.instanceOf(Channel);
-      should(channel).have.properties({
-        number: 1,
-        device: device
-      });
-    });
-
-    it('should cache channel object', function() {
-      should(device.channel(1)).equal(channel);
-    });
   });
 });
