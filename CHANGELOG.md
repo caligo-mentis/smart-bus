@@ -6,6 +6,7 @@
   * Add address getter to `Device` instance
   * New API functions signature
   * Sender device decoupled from `Bus` class
+  * Events on `Device` provides command object as a payload
 
 **BREAKING:**
 
@@ -23,6 +24,8 @@
 
     Refer to [`Initialization`](README.md#initialization)
     readme section for details.
+
+  - Events on `Device` instance have same payload as events on `Bus`;
 
 ## 0.5.2
 

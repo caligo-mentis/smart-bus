@@ -512,13 +512,13 @@ describe('Bus', function() {
       emitEvents();
 
       should(handler.callCount).be.exactly(1);
-      should(handler.lastCall.args[0]).have.properties({
-        level: 100,
-        channel: 6,
-        success: true
-      });
 
-      should(handler.lastCall.args[1]).equal(bus.device('255.255'));
+      should(handler.lastCall.arg).have.properties({
+        code: 0x0032,
+        sender: device,
+        target: bus.device('255.255'),
+        data: { level: 100, channel: 6, success: true }
+      });
     });
 
     it('should handle invalid message', function() {

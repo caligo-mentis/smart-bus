@@ -79,7 +79,7 @@ Listen for commands from specific device
 ```js
 var sensor = bus.device('1.20');
 
-sensor.on(0x1647, function(data, target) { /* ... */ });
+sensor.on(0x1647, function(command) { /* ... */ });
 ```
 
 ### Send commands
