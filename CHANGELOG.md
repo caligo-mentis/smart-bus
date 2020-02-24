@@ -1,3 +1,7 @@
+## 0.5.2
+
+  * Floor heating parse add timer data only if present (#14)
+
 ## 0.5.1
 
   * Parse only integer part of temperature value for 0xE3E5 (#11)
