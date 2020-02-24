@@ -374,22 +374,40 @@ module.exports = {
   // '0x1944'
 
   // 11.1.2 Response Read Floor Heating Status
-  '0x1945': {
-    data: new Buffer('001800011414141401', 'hex'),
-    object: {
-      temperature: {
-        type: 0,
-        current: 24,
-        normal: 20,
-        day: 20,
-        night: 20,
-        away: 20
-      },
-      status: false,
-      mode: 1,
-      timer: 1
+  '0x1945': [
+    {
+      data: new Buffer('001800011414141401', 'hex'),
+      object: {
+        temperature: {
+          type: 0,
+          current: 24,
+          normal: 20,
+          day: 20,
+          night: 20,
+          away: 20
+        },
+        status: false,
+        mode: 1,
+        timer: 1
+      }
+    },
+    {
+      data: new Buffer('0018000114141414', 'hex'),
+      object: {
+        temperature: {
+          type: 0,
+          current: 24,
+          normal: 20,
+          day: 20,
+          night: 20,
+          away: 20
+        },
+        status: false,
+        mode: 1
+      }
     }
-  },
+  ],
+
 
   // 11.1.3 Control Floor Heating Status
   '0x1946': {
