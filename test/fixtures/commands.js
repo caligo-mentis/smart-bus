@@ -180,7 +180,10 @@ module.exports = {
   ],
 
   // 4.3.3 Read Status of Channels
-  // '0x0033'
+  '0x0033': {
+    data: new Buffer('01', 'hex'),
+    object: { channel: 1 }
+  },
 
   // 4.3.4 Response Read Status of Channels
   '0x0034': {
@@ -367,6 +370,50 @@ module.exports = {
     { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
     { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
   ],
+
+  // 10.1.3 Control AC Status. Type New.
+  '0x193A': {
+    data: new Buffer('01001517131514300103001601', 'hex'),
+    object: {
+      acstatus: true,
+      acno: 1,
+      setupmode: 3,
+      setupspeed: 0,
+      temperature: {
+        type: 0,
+        now: 21,
+        cooling: 23,
+        heating: 19,
+        auto: 21,
+        dry: 20
+      },
+      modeandfan: 48,
+      currentmode: 22,
+      sweep: 01
+    }
+  },
+
+  // 10.1.3 Response AC Status. Type New.
+  '0x193A': {
+    data: new Buffer('01001517131514300103001601', 'hex'),
+    object: {
+      acstatus: true,
+      acno: 1,
+      setupmode: 3,
+      setupspeed: 0,
+      temperature: {
+        type: 0,
+        now: 21,
+        cooling: 23,
+        heating: 19,
+        auto: 21,
+        dry: 20
+      },
+      modeandfan: 48,
+      currentmode: 22,
+      sweep: 01
+    }
+  },
 
   /* 11.1 Floor Heating Control from DLP */
 
@@ -574,11 +621,12 @@ module.exports = {
 
   // 12.4.2 Response Read Sensors Status
   '0x1605': {
-    data: new Buffer('F82C01080000010100', 'hex'),
+    data: new Buffer('F82C0108280000010100', 'hex'),
     object: {
       success: true,
       temperature: 24,
       brightness: 264,
+      humidity: 40,
       air: 0,
       gas: 0,
       movement: true,
@@ -668,5 +716,25 @@ module.exports = {
       data: new Buffer('010000B441', 'hex'),
       object: { channel: 1, temperature: 22.5 }
     }
-  ]
+  ],
+
+  /* 99. Undocumented Operation Codes */
+
+  // 99.1.1 Panel brightness/lock
+  '0xE012': {
+    data: new Buffer('140101', 'hex'),
+    object: { backlight: 20, statusLights: 1, autoLock: 1 }
+  },
+
+  // 99.1.3 Panel button color
+  '0xE14E': {
+    data: new Buffer('01010203040506', 'hex'),
+    object: {
+      button: 1,
+      color: {
+        on: [1, 2, 3],
+        off: [4, 5, 6]
+      }
+    }
+  }
 };
