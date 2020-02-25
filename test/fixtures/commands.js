@@ -408,7 +408,6 @@ module.exports = {
     }
   ],
 
-
   // 11.1.3 Control Floor Heating Status
   '0x1946': {
     data: new Buffer('00010116161412', 'hex'),
