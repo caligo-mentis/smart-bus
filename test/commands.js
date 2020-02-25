@@ -12,15 +12,15 @@ describe('Commands', function() {
     if (!isArray(examples)) examples = [examples];
 
     describe(code, function() {
-      it('should parse data', function() {
+      it('should parse payload', function() {
         examples.forEach(function(example) {
-          should(command.parse(example.data)).eql(example.object);
+          should(command.parse(example.payload)).eql(example.data);
         });
       });
 
       it('should encode data', function() {
         examples.forEach(function(example) {
-          should(command.encode(example.object)).eql(example.data);
+          should(command.encode(example.data)).eql(example.payload);
         });
       });
     });

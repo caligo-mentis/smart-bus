@@ -3,15 +3,15 @@ module.exports = {
 
   // 4.1.1 Scene Control
   '0x0002': {
-    data: new Buffer('0403', 'hex'),
-    object: { area: 4, scene: 3 }
+    payload: new Buffer('0403', 'hex'),
+    data: { area: 4, scene: 3 }
   },
 
   // 4.1.2 Scene Control Response
   '0x0003': [
     {
-      data: new Buffer('0201060A', 'hex'),
-      object: { area: 2, scene: 1, channels: [
+      payload: new Buffer('0201060A', 'hex'),
+      data: { area: 2, scene: 1, channels: [
         { number: 1, status: false },
         { number: 2, status: true },
         { number: 3, status: false },
@@ -21,8 +21,8 @@ module.exports = {
       ] }
     },
     {
-      data: new Buffer('02010608', 'hex'),
-      object: { area: 2, scene: 1, channels: [
+      payload: new Buffer('02010608', 'hex'),
+      data: { area: 2, scene: 1, channels: [
         { number: 1, status: false },
         { number: 2, status: false },
         { number: 3, status: false },
@@ -35,20 +35,20 @@ module.exports = {
 
   // 4.1.3 Read Status of Scene
   '0x000C': {
-    data: new Buffer('06', 'hex'),
-    object: { area: 6 }
+    payload: new Buffer('06', 'hex'),
+    data: { area: 6 }
   },
 
   // 4.1.4 Response Read Status of Scene
   '0x000D': {
-    data: new Buffer('06FE', 'hex'),
-    object: { area: 6, scene: 254 }
+    payload: new Buffer('06FE', 'hex'),
+    data: { area: 6, scene: 254 }
   },
 
   // 4.1.5 Broadcast Status of Scene
   '0xEFFF': {
-    data: new Buffer('04FEFEFEFE060B', 'hex'),
-    object: {
+    payload: new Buffer('04FEFEFEFE060B', 'hex'),
+    data: {
       areas: [
         { number: 1, scene: 254 },
         { number: 2, scene: 254 },
@@ -70,8 +70,8 @@ module.exports = {
 
   // 4.1.7 Response Read Area Information
   '0x0005': {
-    data: new Buffer('0269010404010200040003', 'hex'),
-    object: {
+    payload: new Buffer('0269010404010200040003', 'hex'),
+    data: {
       device: { type: 617, subnet: 1, id: 4 },
       areas: 4,
       channels: [
@@ -87,15 +87,15 @@ module.exports = {
 
   // 4.1.8 Read Scene Information
   '0x0000': {
-    data: new Buffer('0102', 'hex'),
-    object: { area: 1, scene: 2 }
+    payload: new Buffer('0102', 'hex'),
+    data: { area: 1, scene: 2 }
   },
 
   // 4.1.9 Read Scene Information Response
   '0x0001': [
     {
-      data: new Buffer('010205AD326464323232', 'hex'),
-      object: { area: 1, scene: 2, time: 1453, channels: [
+      payload: new Buffer('010205AD326464323232', 'hex'),
+      data: { area: 1, scene: 2, time: 1453, channels: [
         { number: 1, level: 50 },
         { number: 2, level: 100 },
         { number: 3, level: 100 },
@@ -105,8 +105,8 @@ module.exports = {
       ] }
     },
     {
-      data: new Buffer('010305A032646432', 'hex'),
-      object: { area: 1, scene: 3, time: 1440, channels: [
+      payload: new Buffer('010305A032646432', 'hex'),
+      data: { area: 1, scene: 3, time: 1440, channels: [
         { number: 1, level: 50 },
         { number: 2, level: 100 },
         { number: 3, level: 100 },
@@ -124,32 +124,32 @@ module.exports = {
 
   // 4.2.1 Sequence Control
   '0x001A': {
-    data: new Buffer('0102', 'hex'),
-    object: { area: 1, sequence: 2 }
+    payload: new Buffer('0102', 'hex'),
+    data: { area: 1, sequence: 2 }
   },
 
   // 4.2.2 Response Sequence Control
   '0x001B': {
-    data: new Buffer('020A', 'hex'),
-    object: { area: 2, sequence: 10 }
+    payload: new Buffer('020A', 'hex'),
+    data: { area: 2, sequence: 10 }
   },
 
   // 4.2.3 Read Status of Sequence
   '0xE014': {
-    data: new Buffer('08', 'hex'),
-    object: { area: 8 }
+    payload: new Buffer('08', 'hex'),
+    data: { area: 8 }
   },
 
   // 4.2.4 Response Read Status of Sequence
   '0xE015': {
-    data: new Buffer('08A0', 'hex'),
-    object: { area: 8, sequence: 160 }
+    payload: new Buffer('08A0', 'hex'),
+    data: { area: 8, sequence: 160 }
   },
 
   // 4.2.5 Broadcast Status of Sequence
   '0xF036': {
-    data: new Buffer('0A050B370163', 'hex'),
-    object: { areas: [
+    payload: new Buffer('0A050B370163', 'hex'),
+    data: { areas: [
       { number: 1, sequence: 10 },
       { number: 2, sequence: 5 },
       { number: 3, sequence: 11 },
@@ -163,19 +163,19 @@ module.exports = {
 
   // 4.3.1 Single Channel Control
   '0x0031': {
-    data: new Buffer('04640190', 'hex'),
-    object: { channel: 4, level: 100, time: 400 }
+    payload: new Buffer('04640190', 'hex'),
+    data: { channel: 4, level: 100, time: 400 }
   },
 
   // 4.3.2 Response Single Channel Control
   '0x0032': [
     {
-      data: new Buffer('0AF864', 'hex'),
-      object: { channel: 10, level: 100, success: true }
+      payload: new Buffer('0AF864', 'hex'),
+      data: { channel: 10, level: 100, success: true }
     },
     {
-      data: new Buffer('06F532', 'hex'),
-      object: { channel: 6, level: 50, success: false }
+      payload: new Buffer('06F532', 'hex'),
+      data: { channel: 6, level: 50, success: false }
     }
   ],
 
@@ -184,8 +184,8 @@ module.exports = {
 
   // 4.3.4 Response Read Status of Channels
   '0x0034': {
-    data: new Buffer('06643250006428', 'hex'),
-    object: { channels: [
+    payload: new Buffer('06643250006428', 'hex'),
+    data: { channels: [
       { number: 1, level: 100 },
       { number: 2, level: 50 },
       { number: 3, level: 80 },
@@ -200,8 +200,8 @@ module.exports = {
 
   // 4.3.6 Response Read Current Level of Channels
   '0x0039': {
-    data: new Buffer('06643250006428', 'hex'),
-    object: { channels: [
+    payload: new Buffer('06643250006428', 'hex'),
+    data: { channels: [
       { number: 1, level: 100 },
       { number: 2, level: 50 },
       { number: 3, level: 80 },
@@ -215,32 +215,32 @@ module.exports = {
 
   // 5.1.1 Logic Control
   '0xF116': [
-    { data: new Buffer('0100', 'hex'), object: { block: 1, status: false } },
-    { data: new Buffer('FA01', 'hex'), object: { block: 250, status: true } },
+    { payload: new Buffer('0100', 'hex'), data: { block: 1, status: false } },
+    { payload: new Buffer('FA01', 'hex'), data: { block: 250, status: true } },
   ],
 
   // 5.1.2 Response Logic Control
   '0xF117': [
-    { data: new Buffer('0201', 'hex'), object: { block: 2, status: true } },
-    { data: new Buffer('FB00', 'hex'), object: { block: 251, status: false } },
+    { payload: new Buffer('0201', 'hex'), data: { block: 2, status: true } },
+    { payload: new Buffer('FB00', 'hex'), data: { block: 251, status: false } },
   ],
 
   // 5.1.3 Read Status of Logic Control
   '0xF112': [
-    { data: new Buffer('05', 'hex'), object: { block: 5 } },
-    { data: new Buffer('FF', 'hex'), object: { block: 255 } }
+    { payload: new Buffer('05', 'hex'), data: { block: 5 } },
+    { payload: new Buffer('FF', 'hex'), data: { block: 255 } }
   ],
 
   // 5.1.4 Response Read Status of Logic Control
   '0xF113': [
-    { data: new Buffer('0501', 'hex'), object: { block: 5, status: true } },
-    { data: new Buffer('F900', 'hex'), object: { block: 249, status: false } },
+    { payload: new Buffer('0501', 'hex'), data: { block: 5, status: true } },
+    { payload: new Buffer('F900', 'hex'), data: { block: 249, status: false } },
   ],
 
   // 5.1.5 Broadcast Status of Status of Logic Control
   '0xF12F': [
-    { data: new Buffer('0101', 'hex'), object: { block: 1, status: true } },
-    { data: new Buffer('F501', 'hex'), object: { block: 245, status: true } },
+    { payload: new Buffer('0101', 'hex'), data: { block: 1, status: true } },
+    { payload: new Buffer('F501', 'hex'), data: { block: 245, status: true } },
   ],
 
   // 5.1.6 Read System Date and Time
@@ -248,58 +248,58 @@ module.exports = {
 
   // 5.1.7 Response Read System Date and Time
   '0xDA01': {
-    data: new Buffer('F812020C16020E01', 'hex'),
-    object: { success: true, date: new Date(2018, 1, 12, 22, 02, 14) }
+    payload: new Buffer('F812020C16020E01', 'hex'),
+    data: { success: true, date: new Date(2018, 1, 12, 22, 02, 14) }
   },
 
   // 5.1.8 Modify Read System Date and Time
   '0xDA02': {
-    data: new Buffer('12020C161B1D01', 'hex'),
-    object: { date: new Date(2018, 1, 12, 22, 27, 29) }
+    payload: new Buffer('12020C161B1D01', 'hex'),
+    data: { date: new Date(2018, 1, 12, 22, 27, 29) }
   },
 
   // 5.1.9 Response Modify Read System Date and Time
   '0xDA03': [
-    { data: new Buffer('F8', 'hex'), object: { success: true } },
-    { data: new Buffer('F5', 'hex'), object: { success: false } },
+    { payload: new Buffer('F8', 'hex'), data: { success: true } },
+    { payload: new Buffer('F5', 'hex'), data: { success: false } },
   ],
 
   // 5.1.10 Broadcast System Date and Time (Every Minute)
   '0xDA44': {
-    data: new Buffer('12020C162C27', 'hex'),
-    object: { date: new Date(2018, 1, 12, 22, 44, 39) }
+    payload: new Buffer('12020C162C27', 'hex'),
+    data: { date: new Date(2018, 1, 12, 22, 44, 39) }
   },
 
   /* 6. Universal Switch */
 
   // 6.1.1 UV Switch Control
   '0xE01C': [
-    { data: new Buffer('10FF', 'hex'), object: { switch: 16, status: true } },
-    { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } }
+    { payload: new Buffer('10FF', 'hex'), data: { switch: 16, status: true } },
+    { payload: new Buffer('0500', 'hex'), data: { switch: 5, status: false } }
   ],
 
   // 6.1.2 Response UV Switch Control
   '0xE01D': [
-    { data: new Buffer('0A01', 'hex'), object: { switch: 10, status: true } },
-    { data: new Buffer('0200', 'hex'), object: { switch: 2, status: false } }
+    { payload: new Buffer('0A01', 'hex'), data: { switch: 10, status: true } },
+    { payload: new Buffer('0200', 'hex'), data: { switch: 2, status: false } }
   ],
 
   // 6.1.3 Read Status of UV Switch
   '0xE018': [
-    { data: new Buffer('0A', 'hex'), object: { switch: 10 } },
-    { data: new Buffer('05', 'hex'), object: { switch: 5 } }
+    { payload: new Buffer('0A', 'hex'), data: { switch: 10 } },
+    { payload: new Buffer('05', 'hex'), data: { switch: 5 } }
   ],
 
   // 6.1.4 Response Read Status of UV Switch
   '0xE019': [
-    { data: new Buffer('0A01', 'hex'), object: { switch: 10, status: true } },
-    { data: new Buffer('0500', 'hex'), object: { switch: 5, status: false } },
+    { payload: new Buffer('0A01', 'hex'), data: { switch: 10, status: true } },
+    { payload: new Buffer('0500', 'hex'), data: { switch: 5, status: false } },
   ],
 
   // 6.1.5 Broadcast Status of Status of UV Switches
   '0xE017': {
-    data: new Buffer('06010001010000', 'hex'),
-    object: { switches: [
+    payload: new Buffer('06010001010000', 'hex'),
+    data: { switches: [
       { number: 1, status: true },
       { number: 2, status: false },
       { number: 3, status: true },
@@ -313,30 +313,30 @@ module.exports = {
 
   // 7.1.1 Curtain Switch Control
   '0xE3E0': [
-    { data: new Buffer('0102', 'hex'), object: { curtain: 1, status: 2 } },
-    { data: new Buffer('115A', 'hex'), object: { curtain: 17, status: 90 } }
+    { payload: new Buffer('0102', 'hex'), data: { curtain: 1, status: 2 } },
+    { payload: new Buffer('115A', 'hex'), data: { curtain: 17, status: 90 } }
   ],
 
   // 7.1.2 Response Curtain Switch Control
   '0xE3E1': [
-    { data: new Buffer('0102', 'hex'), object: { curtain: 1, status: 2 } },
-    { data: new Buffer('115A', 'hex'), object: { curtain: 17, status: 90 } },
-    { data: new Buffer('11EE', 'hex'), object: { curtain: 17, status: 238 } }
+    { payload: new Buffer('0102', 'hex'), data: { curtain: 1, status: 2 } },
+    { payload: new Buffer('115A', 'hex'), data: { curtain: 17, status: 90 } },
+    { payload: new Buffer('11EE', 'hex'), data: { curtain: 17, status: 238 } }
   ],
 
   // 7.1.3 Read Status of Curtain Switch
-  '0xE3E2': { data: new Buffer('04', 'hex'), object: { curtain: 4 } },
+  '0xE3E2': { payload: new Buffer('04', 'hex'), data: { curtain: 4 } },
 
   // 7.1.4 Response Read Status of Curtain Switch
   '0xE3E3': [
-    { data: new Buffer('0102', 'hex'), object: { curtain: 1, status: 2 } },
-    { data: new Buffer('115A', 'hex'), object: { curtain: 17, status: 90 } }
+    { payload: new Buffer('0102', 'hex'), data: { curtain: 1, status: 2 } },
+    { payload: new Buffer('115A', 'hex'), data: { curtain: 17, status: 90 } }
   ],
 
   // 7.1.5 Broadcast Status of Status of Curtain Switches
   '0xE3E4': {
-    data: new Buffer('00000201', 'hex'),
-    object: { curtains: [
+    payload: new Buffer('00000201', 'hex'),
+    data: { curtains: [
       { number: 1, level: 0, status: 2 },
       { number: 2, level: 0, status: 1 }
     ] }
@@ -346,26 +346,26 @@ module.exports = {
 
   // 9.1.1 Panel Control
   '0xE3D8': [
-    { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
-    { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
+    { payload: new Buffer('0D64', 'hex'), data: { key: 13, value: 100 } },
+    { payload: new Buffer('0E32', 'hex'), data: { key: 14, value: 50 } },
   ],
 
   // 9.1.2 Response Panel Control
   '0xE3D9': [
-    { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
-    { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
+    { payload: new Buffer('0D64', 'hex'), data: { key: 13, value: 100 } },
+    { payload: new Buffer('0E32', 'hex'), data: { key: 14, value: 50 } },
   ],
 
   // 9.1.3 Read Status of Panel Control
   '0xE3DA': [
-    { data: new Buffer('0D', 'hex'), object: { key: 13 } },
-    { data: new Buffer('0E', 'hex'), object: { key: 14 } }
+    { payload: new Buffer('0D', 'hex'), data: { key: 13 } },
+    { payload: new Buffer('0E', 'hex'), data: { key: 14 } }
   ],
 
   // 9.1.4 Response Read Status of Panel Control
   '0xE3DB': [
-    { data: new Buffer('0D64', 'hex'), object: { key: 13, value: 100 } },
-    { data: new Buffer('0E32', 'hex'), object: { key: 14, value: 50 } },
+    { payload: new Buffer('0D64', 'hex'), data: { key: 13, value: 100 } },
+    { payload: new Buffer('0E32', 'hex'), data: { key: 14, value: 50 } },
   ],
 
   /* 11.1 Floor Heating Control from DLP */
@@ -376,8 +376,8 @@ module.exports = {
   // 11.1.2 Response Read Floor Heating Status
   '0x1945': [
     {
-      data: new Buffer('001800011414141401', 'hex'),
-      object: {
+      payload: new Buffer('001800011414141401', 'hex'),
+      data: {
         temperature: {
           type: 0,
           current: 24,
@@ -392,8 +392,8 @@ module.exports = {
       }
     },
     {
-      data: new Buffer('0018000114141414', 'hex'),
-      object: {
+      payload: new Buffer('0018000114141414', 'hex'),
+      data: {
         temperature: {
           type: 0,
           current: 24,
@@ -410,8 +410,8 @@ module.exports = {
 
   // 11.1.3 Control Floor Heating Status
   '0x1946': {
-    data: new Buffer('00010116161412', 'hex'),
-    object: {
+    payload: new Buffer('00010116161412', 'hex'),
+    data: {
       temperature: {
         type: 0,
         normal: 22,
@@ -426,8 +426,8 @@ module.exports = {
 
   // 11.1.4 Response Control Floor Heating Status
   '0x1947': {
-    data: new Buffer('F800010116161412', 'hex'),
-    object: {
+    payload: new Buffer('F800010116161412', 'hex'),
+    data: {
       success: true,
       temperature: {
         type: 0,
@@ -445,14 +445,14 @@ module.exports = {
 
   // 11.2.1 Read Floor Heating Status
   '0x1C5E': [
-    { data: new Buffer('01', 'hex'), object: { channel: 1 } },
-    { data: new Buffer('0A', 'hex'), object: { channel: 10 } },
+    { payload: new Buffer('01', 'hex'), data: { channel: 1 } },
+    { payload: new Buffer('0A', 'hex'), data: { channel: 10 } },
   ],
 
   // 11.2.2 Response Read Floor Heating Status
   '0x1C5F': {
-    data: new Buffer('012100021818161400011E010A', 'hex'),
-    object: {
+    payload: new Buffer('012100021818161400011E010A', 'hex'),
+    data: {
       channel: 1,
       work: { type: 2, status: true },
       temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
@@ -466,8 +466,8 @@ module.exports = {
 
   // 11.2.3 Control Floor Heating Status
   '0x1C5C': {
-    data: new Buffer('0121000218181614010A', 'hex'),
-    object: {
+    payload: new Buffer('0121000218181614010A', 'hex'),
+    data: {
       channel: 1,
       work: { type: 2, status: true },
       temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
@@ -479,8 +479,8 @@ module.exports = {
 
   // 11.2.4 Response Control Floor Heating Status
   '0x1C5D': {
-    data: new Buffer('0121000218181614010A', 'hex'),
-    object: {
+    payload: new Buffer('0121000218181614010A', 'hex'),
+    data: {
       channel: 1,
       work: { type: 2, status: true },
       temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
@@ -494,14 +494,14 @@ module.exports = {
 
   // 12.1.1 Read Sensors Status
   '0xDB00': [
-    { data: new Buffer('01', 'hex'), object: { logic: 1 } },
-    { data: new Buffer('18', 'hex'), object: { logic: 24 } },
+    { payload: new Buffer('01', 'hex'), data: { logic: 1 } },
+    { payload: new Buffer('18', 'hex'), data: { logic: 24 } },
   ],
 
   // 12.1.2 Response Read Sensors Status
   '0xDB01': {
-    data: new Buffer('010000010000012C', 'hex'),
-    object: {
+    payload: new Buffer('010000010000012C', 'hex'),
+    data: {
       movement: true,
       delay: 300,
       dryContacts: [
@@ -519,8 +519,8 @@ module.exports = {
   // 12.2.2 Response Read Sensors Status
   '0x1646': [
     {
-      data: new Buffer('F82D016A000000', 'hex'),
-      object: {
+      payload: new Buffer('F82D016A000000', 'hex'),
+      data: {
         success: true,
         temperature: 25,
         brightness: 362,
@@ -532,8 +532,8 @@ module.exports = {
       }
     },
     {
-      data: new Buffer('F82D016A01010000', 'hex'),
-      object: {
+      payload: new Buffer('F82D016A01010000', 'hex'),
+      data: {
         success: true,
         temperature: 25,
         brightness: 362,
@@ -553,8 +553,8 @@ module.exports = {
 
   // 12.3.3 Broadcast Sensors Status Automatically
   '0x1647': {
-    data: new Buffer('2D03F701000001', 'hex'),
-    object: {
+    payload: new Buffer('2D03F701000001', 'hex'),
+    data: {
       temperature: 25,
       brightness: 1015,
       movement: true,
@@ -573,8 +573,8 @@ module.exports = {
 
   // 12.4.2 Response Read Sensors Status
   '0x1605': {
-    data: new Buffer('F82C01080000010100', 'hex'),
-    object: {
+    payload: new Buffer('F82C01080000010100', 'hex'),
+    data: {
       success: true,
       temperature: 24,
       brightness: 264,
@@ -590,8 +590,8 @@ module.exports = {
 
   // 12.4.3 Broadcast Sensors Status
   '0x1630': {
-    data: new Buffer('F82C01080000010100', 'hex'),
-    object: {
+    payload: new Buffer('F82C01080000010100', 'hex'),
+    data: {
       success: true,
       temperature: 24,
       brightness: 264,
@@ -609,43 +609,43 @@ module.exports = {
 
   // 13.1.1 Read Temperature
   '0xE3E7': [
-    { data: new Buffer('01', 'hex'), object: { channel: 1 } },
-    { data: new Buffer('FF', 'hex'), object: { channel: 255 } }
+    { payload: new Buffer('01', 'hex'), data: { channel: 1 } },
+    { payload: new Buffer('FF', 'hex'), data: { channel: 255 } }
   ],
 
   // 13.1.2 Response Read Temperature
   '0xE3E8': [
     {
-      data: new Buffer('0100', 'hex'),
-      object: { channel: 1, temperature: 0 }
+      payload: new Buffer('0100', 'hex'),
+      data: { channel: 1, temperature: 0 }
     },
     {
-      data: new Buffer('0116', 'hex'),
-      object: { channel: 1, temperature: 22 }
+      payload: new Buffer('0116', 'hex'),
+      data: { channel: 1, temperature: 22 }
     },
     {
-      data: new Buffer('018F', 'hex'),
-      object: { channel: 1, temperature: -15 }
+      payload: new Buffer('018F', 'hex'),
+      data: { channel: 1, temperature: -15 }
     },
   ],
 
   // 13.1.3 Broadcast Temperature
   '0xE3E5': [
     {
-      data: new Buffer('0189', 'hex'),
-      object: { channel: 1, temperature: -9 }
+      payload: new Buffer('0189', 'hex'),
+      data: { channel: 1, temperature: -9 }
     },
     {
-      data: new Buffer('0100', 'hex'),
-      object: { channel: 1, temperature: 0 }
+      payload: new Buffer('0100', 'hex'),
+      data: { channel: 1, temperature: 0 }
     },
     {
-      data: new Buffer('0105', 'hex'),
-      object: { channel: 1, temperature: 5 }
+      payload: new Buffer('0105', 'hex'),
+      data: { channel: 1, temperature: 5 }
     },
     {
-      data: new Buffer('0119', 'hex'),
-      object: { channel: 1, temperature: 25 }
+      payload: new Buffer('0119', 'hex'),
+      data: { channel: 1, temperature: 25 }
     }
   ],
 
@@ -653,19 +653,19 @@ module.exports = {
 
   // 13.2.1 Read Temperature New
   '0x1948': {
-    data: new Buffer('01', 'hex'),
-    object: { channel: 1 }
+    payload: new Buffer('01', 'hex'),
+    data: { channel: 1 }
   },
 
   // 13.2.2 Response Temperature
   '0x1949': [
     {
-      data: new Buffer('019A99C141', 'hex'),
-      object: { channel: 1, temperature: 24.200000762939453 }
+      payload: new Buffer('019A99C141', 'hex'),
+      data: { channel: 1, temperature: 24.200000762939453 }
     },
     {
-      data: new Buffer('010000B441', 'hex'),
-      object: { channel: 1, temperature: 22.5 }
+      payload: new Buffer('010000B441', 'hex'),
+      data: { channel: 1, temperature: 22.5 }
     }
   ]
 };

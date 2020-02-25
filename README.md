@@ -60,8 +60,11 @@ bus.on('command', function(command) {
   command.sender;
   command.target;
 
-  // Object with decoded data or raw buffer
-  // if data can not be parsed automatically
+  // Buffer with command payload
+  command.payload;
+
+  // Object with decoded data from payload
+  // if it could be parsed automatically
   command.data;
 
 });
@@ -81,6 +84,49 @@ var sensor = bus.device('1.20');
 
 sensor.on(0x1647, function(command) { /* ... */ });
 ```
+
+#### Command payload
+
+This library has built-in parses and encoders for payload of some HDL commands.
+You can find it with examples in [`fixtures`](test/fixtures/commands.js).
+
+Parser-function will be invoked on access to `command.data` property:
+
+```js
+bus.on(0x0032, function(command) {
+  command.payload; // => <Buffer 0a f8 64>
+
+  command.data; // => { channel: 10, level: 100, success: true }
+});
+```
+
+`command.data` is a short-hand getter for `command.parse(command.payload)`.
+
+Most of these parsers was built refering to official document
+"Operation Code of HDL Buspro v1.111", tested on real HDL setup
+and should work out-of-the-box with your installation.
+
+But this is unofficial library and you could get errors when
+accessing `command.data` property due to malformed command payload or
+undocumented features.
+
+In case if you expiriencing unexpected errors on access to `command.data`
+property, you can fallback to parse `command.payload` manually:
+
+```js
+bus.on(0x0032, function(command) {
+  var data;
+
+  try {
+    data = command.data;
+  } catch(err) {
+    // Parse command.payload manually in case of error
+  }
+});
+```
+
+Feel free to make a PR with your fix or Issue with example of malformed
+command payload and other details.
 
 ### Send commands
 
@@ -173,7 +219,7 @@ In case if data object can not be encoded error will be passed into callback.
 Built-in parsers and encoders for command payload with examples
 described in [`fixtures`](test/fixtures/commands.js).
 
-Also `send` method accepts raw buffer as command data:
+Use `payload` param if you need to send raw buffer as command payload:
 
 ```js
 var sender = bus.device('1.50');
@@ -184,7 +230,7 @@ bus.send({
   target: dimmer,
 
   command: 0x0031,
-  data: new Buffer('04640190', 'hex')
+  payload: new Buffer('04640190', 'hex')
 }, function(err) { /* ... */ });
 ```
 
@@ -197,7 +243,7 @@ Use them to keep an actual state of HDL devices:
 // Create UDP socket with HDL IP gateway
 var bus = new SmartBus('hdl://192.168.1.250:6000');
 
-// Initialize controller device
+// Initialize virtual controller device to send commands
 var controller = bus.controller('1.50');
 
 // Initialize dimmer device
@@ -215,7 +261,7 @@ dimmer.on(0x0032, function(command) {
   else console.log('Failed to change level of #%d channel', channel);
 });
 
-// Send "Single Channel Control" command to dimmer
+// Use controller to send "Single Channel Control" command to dimmer
 controller.send({
   target: dimmer,
   command: 0x0031,

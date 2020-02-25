@@ -319,6 +319,26 @@ describe('Bus', function() {
       });
     });
 
+    it('should accept payload buffer', function(done) {
+      bus.send({
+        sender: sender,
+        target: '1.23',
+        command: 0x0031,
+        payload: new Buffer('01640000', 'hex')
+      }, function(err) {
+        should(send.callCount).be.exactly(1);
+
+        should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
+          '1434C45AAAA0F0132FFFE00310117016400006114', 'hex'));
+        should(send.lastCall.args[1]).equal(0);
+        should(send.lastCall.args[2]).eql(31);
+        should(send.lastCall.args[3]).eql(6000);
+        should(send.lastCall.args[4]).eql('192.0.2.100');
+
+        done(err);
+      });
+    });
+
     it('should catch data encoding error', function(done) {
       bus.send({
         sender: sender,
@@ -365,10 +385,10 @@ describe('Bus', function() {
       bus.on('listening', function() {
         bus.setBroadcast(true);
 
-        var data = new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
+        var message = new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
           '10202690032FFFF06F864B5A9', 'hex');
 
-        should(bus.parse(data)).have.properties({
+        should(bus.parse(message)).have.properties({
           code: 0x0032,
           sender: bus.device('1.2'),
           target: bus.device('255.255')
@@ -465,14 +485,16 @@ describe('Bus', function() {
         code: 0x0031,
         sender: bus.device('1.5'),
         target: bus.device('1.4'),
-        data: { channel: 4, level: 100, time: 3 }
+        data: { channel: 4, level: 100, time: 3 },
+        payload: new Buffer('0464000300', 'hex')
       });
 
       should(handler.calls[1].arg).have.properties({
         code: 0x0032,
         sender: bus.device('1.2'),
         target: bus.device('255.255'),
-        data: { channel: 6, success: true, level: 100 }
+        data: { channel: 6, success: true, level: 100 },
+        payload: new Buffer('06F864', 'hex')
       });
     });
 
@@ -486,7 +508,8 @@ describe('Bus', function() {
         code: 0x0032,
         sender: bus.device('1.2'),
         target: bus.device('255.255'),
-        data: { channel: 6, success: true, level: 100 }
+        data: { channel: 6, success: true, level: 100 },
+        payload: new Buffer('06F864', 'hex')
       });
     });
 
@@ -500,7 +523,8 @@ describe('Bus', function() {
         code: 0x0031,
         sender: bus.device('1.5'),
         target: bus.device('1.4'),
-        data: { channel: 4, level: 100, time: 3 }
+        data: { channel: 4, level: 100, time: 3 },
+        payload: new Buffer('0464000300', 'hex')
       });
     });
 
@@ -517,7 +541,8 @@ describe('Bus', function() {
         code: 0x0032,
         sender: device,
         target: bus.device('255.255'),
-        data: { level: 100, channel: 6, success: true }
+        data: { level: 100, channel: 6, success: true },
+        payload: new Buffer('06F864', 'hex')
       });
     });
 

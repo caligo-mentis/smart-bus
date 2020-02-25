@@ -53,6 +53,28 @@ describe('Device', function() {
     });
   });
 
+  it('should send command with payload', function(done) {
+    var payload = new Buffer([1, 2, 3]);
+    var send = simple.mock(bus, 'send').callback();
+
+    device.send({
+      target: target,
+      command: 0x0031,
+      payload: payload
+    }, function(err) {
+      should(send.callCount).equal(1);
+
+      var options = send.lastCall.args[0];
+
+      should(options.sender).equal(device);
+      should(options.target).equal(target);
+      should(options.command).eql(0x0031);
+      should(options.payload).equal(payload);
+
+      done(err);
+    });
+  });
+
   it('should send command without data', function(done) {
     var send = simple.mock(bus, 'send').callback();
 

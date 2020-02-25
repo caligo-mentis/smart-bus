@@ -8,6 +8,7 @@
   * Sender device decoupled from `Bus` class
   * Events on `Device` provides command object as a payload
   * `Channel` DSL removed
+  * Keep command payload
 
 **BREAKING:**
 
