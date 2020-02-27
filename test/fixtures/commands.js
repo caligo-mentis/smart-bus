@@ -30,6 +30,23 @@ module.exports = {
         { number: 5, status: false },
         { number: 6, status: false }
       ] }
+    },
+    {
+      payload: new Buffer('01010CA508', 'hex'),
+      data: { area: 1, scene: 1, channels: [
+        { number: 1, status: true },
+        { number: 2, status: false },
+        { number: 3, status: true },
+        { number: 4, status: false },
+        { number: 5, status: false },
+        { number: 6, status: true },
+        { number: 7, status: false },
+        { number: 8, status: true },
+        { number: 9, status: false },
+        { number: 10, status: false },
+        { number: 11, status: false },
+        { number: 12, status: true }
+      ] }
     }
   ],
 
@@ -46,25 +63,52 @@ module.exports = {
   },
 
   // 4.1.5 Broadcast Status of Scene
-  '0xEFFF': {
-    payload: new Buffer('04FEFEFEFE060B', 'hex'),
-    data: {
-      areas: [
-        { number: 1, scene: 254 },
-        { number: 2, scene: 254 },
-        { number: 3, scene: 254 },
-        { number: 4, scene: 254 }
-      ],
-      channels: [
-        { number: 1, status: true },
-        { number: 2, status: true },
-        { number: 3, status: false },
-        { number: 4, status: true },
-        { number: 5, status: false },
-        { number: 6, status: false },
-      ]
+  '0xEFFF': [
+    {
+      payload: new Buffer('04FEFEFEFE060B', 'hex'),
+      data: {
+        areas: [
+          { number: 1, scene: 254 },
+          { number: 2, scene: 254 },
+          { number: 3, scene: 254 },
+          { number: 4, scene: 254 }
+        ],
+        channels: [
+          { number: 1, status: true },
+          { number: 2, status: true },
+          { number: 3, status: false },
+          { number: 4, status: true },
+          { number: 5, status: false },
+          { number: 6, status: false },
+        ]
+      },
+    },
+    {
+      payload: new Buffer('04FEFEFEFE0C0B08', 'hex'),
+      data: {
+        areas: [
+          { number: 1, scene: 254 },
+          { number: 2, scene: 254 },
+          { number: 3, scene: 254 },
+          { number: 4, scene: 254 }
+        ],
+        channels: [
+          { number: 1, status: true },
+          { number: 2, status: true },
+          { number: 3, status: false },
+          { number: 4, status: true },
+          { number: 5, status: false },
+          { number: 6, status: false },
+          { number: 7, status: false },
+          { number: 8, status: false },
+          { number: 9, status: false },
+          { number: 10, status: false },
+          { number: 11, status: false },
+          { number: 12, status: true }
+        ]
+      }
     }
-  },
+  ],
 
   // 4.1.6 Read Area Information
 

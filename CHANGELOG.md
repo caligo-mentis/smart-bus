@@ -9,6 +9,7 @@
   * Events on `Device` provides command object as a payload
   * `Channel` DSL removed
   * Keep command payload
+  * Fix channels info for scene status commands (`0x0003`, `0xEFFF`)
 
 **BREAKING:**
 
