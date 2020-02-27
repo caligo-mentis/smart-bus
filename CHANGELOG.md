@@ -10,6 +10,7 @@
   * `Channel` DSL removed
   * Keep command payload
   * Fix channels info for scene status commands (`0x0003`, `0xEFFF`)
+  * Fix parsing of "Response Read Sensors Status" (`0x1605`)
 
 **BREAKING:**
 

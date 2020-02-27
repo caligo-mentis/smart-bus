@@ -617,11 +617,12 @@ module.exports = {
 
   // 12.4.2 Response Read Sensors Status
   '0x1605': {
-    payload: new Buffer('F82C01080000010100', 'hex'),
+    payload: new Buffer('F82C0108280000010100', 'hex'),
     data: {
       success: true,
       temperature: 24,
       brightness: 264,
+      humidity: 40,
       air: 0,
       gas: 0,
       movement: true,
