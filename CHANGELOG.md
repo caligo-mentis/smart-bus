@@ -12,6 +12,7 @@
   * Fix channels info for scene status commands (`0x0003`, `0xEFFF`)
   * Fix parsing of "Response Read Sensors Status" (`0x1605`)
   * Add Panel buttons control commands (`0xE012`, `0xE14E`)
+  * Add AC Control commands (`0x193A`, `0x193B`)
 
 **BREAKING:**
 

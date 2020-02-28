@@ -412,6 +412,74 @@ module.exports = {
     { payload: new Buffer('0E32', 'hex'), data: { key: 14, value: 50 } },
   ],
 
+  /* 10. AC Control */
+
+  // 10.1.1 Read AC Status
+  // 0x1938
+
+  // 10.1.2 Response Read AC Status
+  // 0x1939
+
+  // 10.1.3 Control AC Status
+  '0x193A': {
+    payload: new Buffer('01001C10131516230101001311', 'hex'),
+    data: {
+      ac: 1,
+      temperature: {
+        type: 'C',
+        current: 28,
+        cooling: 16,
+        heating: 19,
+        auto: 21,
+        dry: 22
+      },
+      current: {
+        mode: 'fan',
+        speed: 'low'
+      },
+      status: true,
+      setup: {
+        mode: 'heating',
+        speed: 'auto',
+        temperature: 19
+      },
+      swing: {
+        enabled: true,
+        active: true
+      }
+    }
+  },
+
+  // 10.1.4 Response Control AC Status
+  '0x193B': {
+    payload: new Buffer('01001C10131516010100001000', 'hex'),
+    data: {
+      ac: 1,
+      temperature: {
+        type: 'C',
+        current: 28,
+        cooling: 16,
+        heating: 19,
+        auto: 21,
+        dry: 22
+      },
+      current: {
+        mode: 'cooling',
+        speed: 'high'
+      },
+      status: true,
+      setup: {
+        mode: 'cooling',
+        speed: 'auto',
+        temperature: 16
+      },
+      swing: {
+        enabled: false,
+        active: false
+      }
+    }
+  },
+
   /* 11.1 Floor Heating Control from DLP */
 
   // 11.1.1 Read Floor Heating Status
