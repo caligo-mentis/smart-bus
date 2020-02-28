@@ -712,5 +712,45 @@ module.exports = {
       payload: new Buffer('010000B441', 'hex'),
       data: { channel: 1, temperature: 22.5 }
     }
-  ]
+  ],
+
+  /* XX. Undocumented Operation Codes */
+
+  // XX.1 Panel
+
+  // XX.1.1 Panel brightness/lock
+  '0xE012': {
+    payload: new Buffer('140101', 'hex'),
+    data: { backlight: 20, statusLights: 1, autoLock: 1 }
+  },
+
+  // XX.1.2 Panel brighness/lock Response
+  '0xE013': [
+    {
+      payload: new Buffer('F8', 'hex'),
+      data: { success: true }
+    },
+    {
+      payload: new Buffer('F5', 'hex'),
+      data: { success: false }
+    }
+  ],
+
+  // XX.1.3 Panel button color
+  '0xE14E': {
+    payload: new Buffer('04681766FFFFFF', 'hex'),
+    data: {
+      button: 4,
+      color: {
+        on: [104, 23, 102],
+        off: [255, 255, 255]
+      }
+    }
+  },
+
+  // XX.1.4 Panel button color Response,
+  '0xE14F': {
+    payload: new Buffer('04', 'hex'),
+    data: { button: 4 }
+  }
 };
