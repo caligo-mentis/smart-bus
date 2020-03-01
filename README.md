@@ -2,6 +2,18 @@
 
 Node.js implementation of HDL SmartBus protocol http://hdlautomation.com
 
+❗️ Read [migration guide](#v0x---v06) before upgrading to `v0.6`
+
+## Contents
+
+- [Initialization](#initialization)
+- [Receive Commands](#receive-commands)
+- [Send Commands](#send-commands)
+- [Complete example](#complete-example)
+- [Graceful Shutdown](#graceful-shutdown)
+- [Debugging](#debugging)
+- [Upgrading](#upgrading)
+
 ### Initialization
 
 Create instance of SmartBus connector
@@ -314,3 +326,151 @@ Run your script with defined `DEBUG` environment variable to get output:
 ```sh
 $ DEBUG=smart-bus node your-script.js
 ```
+
+### Upgrading
+
+#### v0.x -> v0.6
+
+`v0.6` is a transitional version before upgrading min version of nodejs to v6,
+it includes correct UDP Socket utilization, stability improvements, new methods signatures to provide more flexiliblity and other features.
+
+In `v0.6` "sender" device extracted from `Bus` class and must be
+initialized separately. This change transforms logic of `device.send()` method
+and implies appropriate changes in signatures of all other methods.
+
+Before `v0.6` `device.send()` method was used to send command *to* device,
+now it means "send message *from* device".
+
+Check [`CHANGELOG.md`](CHANGELOG.md#060) to see complete set of changes.
+
+Update to `v0.6` from previous versions requires a lot of change
+
+- Update initialization of `bus` instance:
+
+  ```js
+  /* Before v0.6 */
+
+  var bus = new SmartBus({
+    device: '1.50',
+    gateway: '192.168.1.250',
+    port: 6000
+  });
+  ```
+
+  ```js
+  /* v0.6 */
+
+  var bus = new SmartBus({ gateway: '192.168.1.250', port: 6000 });
+
+  var controller = bus.controller('1.50');
+  ```
+
+- Update `bus.send()` calls:
+
+  ```js
+  /* Before v0.6 */
+
+  bus.send('1.4', 0x0031, { channel: 1, level: 100 },
+    function(err) { /* ... */ });
+
+  bus.send('1.4', 0x0031, new Buffer('0164', 'hex'),
+    function(err) { /* ... */ });
+  ```
+
+  ```js
+  /* v0.6 */
+
+  controller.send({
+    target: '1.4',
+    command: 0x0031,
+    data: { channel: 1, level: 100 }
+  }, function(err) { /* ... */ });
+
+  controller.send({
+    target: '1.4',
+    command: 0x0031,
+    payload: new Buffer('0164', 'hex')
+  }, function(err) { /* ... */ });
+  ```
+
+- Update `device.send()` calls:
+
+  ```js
+  /* Before v0.6 */
+
+  var logic = bus.device('1.10');
+
+  logic.send(0xE01C, { switch: 1, status: 1 }, function(err) { /* ... */ });
+  ```
+
+  ```js
+  /* v0.6 */
+  var logic = bus.device('1.10');
+
+  controller.send({
+    target: logic,
+    command: 0xE01C,
+    data: { switch: 1, status: 1 }
+  }, function(err) { /* ... */ });
+  ```
+
+- Update signature of device event handlers:
+
+  ```js
+  /* Before v0.6 */
+
+  var sensor = bus.device('1.20');
+
+  sensor.on(0x1647, function(data, target) { /* ... */ });
+  ```
+
+  ```js
+  /* v0.6 */
+
+  var sensor = bus.device('1.20');
+
+  sensor.on(0x1647, function(command) {
+    var data = command.data;
+    var target = command.target;
+
+    /* ... */
+  });
+  ```
+
+- Replace `device.channel()` abstraction with custom listener:
+
+  ```js
+  /* Before v0.6 */
+
+  var dimmer = bus.device('1.4');
+  var spotlights = dimmer.channel(2);
+
+  spotlights.on('status', function() {
+    console.log('Spotlights level is %s', spotlights.level);
+  });
+
+  spotlights.control(100, { time: 5 }, function(err) { /* ... */ });
+  ```
+
+  ```js
+  /* v0.6 */
+
+  var dimmer = bus.device('1.4');
+
+  dimmer.on(0x0032, function(command) {
+    var data = command.data;
+
+    if (!data.success) return;
+
+    var level = data.level;
+    var channel = data.channel;
+
+    console.log('Channel #%d level is %d', channel, level);
+  });
+
+  controller.send({
+    target: dimmer,
+    command: 0x0031,
+    data: { channel: 1, level: 100, time: 5 }
+  }, function(err) { /* ... */ });
+  ```
