@@ -1,4 +1,4 @@
-## master
+## 0.6.0
 
   * Allow to reuse same UDP address
   * Socket events on `Bus` instance
