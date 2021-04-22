@@ -781,7 +781,25 @@ module.exports = {
       data: { channel: 1, temperature: 22.5 }
     }
   ],
+    // 16.1.3 Read Dry Contact Status
+  
+  '0x15CE': {
+    payload: new Buffer('0102', 'hex'),
+    data: { area: 1, switch: 2 }
+  },
 
+
+  // 16.1.4 Response Read Dry Contact Status
+  0x15CF: [
+    {
+      payload: new Buffer('010201', 'hex'),
+      data: { area: 1, switch: 2, contact: true}
+    },
+    {
+      payload: new Buffer('010100', 'hex'),
+      data: { area: 1, switch: 1, contact: false}
+    }
+  ],
   /* XX. Undocumented Operation Codes */
 
   // XX.1 Panel
