@@ -789,14 +789,14 @@ module.exports = {
   },
 
   // 16.1.4 Response Read Dry Contact Status
-  0x15CF: [
+  '0x15CF': [
     {
       payload: new Buffer('010201', 'hex'),
-      data: { area: 1, switch: 2, contact: true}
+      data: { area: 1, switch: 2, contact: true }
     },
     {
       payload: new Buffer('010100', 'hex'),
-      data: { area: 1, switch: 1, contact: false}
+      data: { area: 1, switch: 1, contact: false }
     }
   ],
 
