@@ -1,3 +1,7 @@
+## 0.7.0
+
+  * Add Read Dry Contact Status commaands (`0x15CE`, `0x15CF`)
+
 ## 0.6.0
 
   * Allow to reuse same UDP address
