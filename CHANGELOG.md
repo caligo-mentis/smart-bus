@@ -2,6 +2,7 @@
 
   * Add Get Curtain Duration commands (`0xE800`, `0xE801`)
   * Add Dry Contact Multi-Channel Status command (`0x6F00`)
+  * Add Dry Contact broadcast status commands (`0x15D0`, `0x15D1`)
   * Fix `0xE3E3` Curtain Status to support optional duration field
   * Add comprehensive test coverage for new commands
   * Maintain 100% backward compatibility with existing implementations

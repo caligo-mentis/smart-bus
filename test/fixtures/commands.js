@@ -795,6 +795,30 @@ module.exports = {
     }
   ],
 
+  // 16.1.1 Auto broadcast Dry Contact Status
+  '0x15D0': [
+    {
+      payload: Buffer.from('010200', 'hex'),
+      data: { area: 1, channel: 2, status: true }
+    },
+    {
+      payload: Buffer.from('020301', 'hex'),
+      data: { area: 2, channel: 3, status: false }
+    }
+  ],
+
+  // 16.1.2 Response Auto broadcast Dry Contact Status
+  '0x15D1': [
+    {
+      payload: Buffer.from('010100', 'hex'),
+      data: { area: 1, channel: 1, status: true }
+    },
+    {
+      payload: Buffer.from('030401', 'hex'),
+      data: { area: 3, channel: 4, status: false }
+    }
+  ],
+
   // 16.1.3 Read Dry Contact Status
   '0x15CE': {
     payload: Buffer.from('0102', 'hex'),
