@@ -27,7 +27,7 @@ describe('Bus', function() {
         should(bus).have.properties({
           port: 6000,
           gateway: '192.0.2.100',
-          address: new Buffer([0, 0, 0, 0])
+          address: Buffer.from([0, 0, 0, 0])
         });
       });
 
@@ -266,7 +266,7 @@ describe('Bus', function() {
       }, function(err) {
         should(send.callCount).be.exactly(1);
 
-        should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
+        should(send.lastCall.args[0]).eql(Buffer.from('0000000048444C4D49524' +
           '1434C45AAAA0F0132FFFE00310128016400000803', 'hex'));
         should(send.lastCall.args[1]).equal(0);
         should(send.lastCall.args[2]).eql(31);
@@ -288,7 +288,7 @@ describe('Bus', function() {
       }, function(err) {
         should(send.callCount).be.exactly(1);
 
-        should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
+        should(send.lastCall.args[0]).eql(Buffer.from('0000000048444C4D49524' +
           '1434C45AAAA0F0132FFFE0031011E056400000399', 'hex'));
         should(send.lastCall.args[1]).equal(0);
         should(send.lastCall.args[2]).eql(31);
@@ -304,11 +304,11 @@ describe('Bus', function() {
         sender: sender,
         target: '1.23',
         command: 0x0031,
-        data: new Buffer('01640000', 'hex')
+        data: Buffer.from('01640000', 'hex')
       }, function(err) {
         should(send.callCount).be.exactly(1);
 
-        should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
+        should(send.lastCall.args[0]).eql(Buffer.from('0000000048444C4D49524' +
           '1434C45AAAA0F0132FFFE00310117016400006114', 'hex'));
         should(send.lastCall.args[1]).equal(0);
         should(send.lastCall.args[2]).eql(31);
@@ -324,11 +324,11 @@ describe('Bus', function() {
         sender: sender,
         target: '1.23',
         command: 0x0031,
-        payload: new Buffer('01640000', 'hex')
+        payload: Buffer.from('01640000', 'hex')
       }, function(err) {
         should(send.callCount).be.exactly(1);
 
-        should(send.lastCall.args[0]).eql(new Buffer('0000000048444C4D49524' +
+        should(send.lastCall.args[0]).eql(Buffer.from('0000000048444C4D49524' +
           '1434C45AAAA0F0132FFFE00310117016400006114', 'hex'));
         should(send.lastCall.args[1]).equal(0);
         should(send.lastCall.args[2]).eql(31);
@@ -361,7 +361,7 @@ describe('Bus', function() {
       }, function(err) {
         should(send.callCount).be.exactly(1);
 
-        should(send.lastCall.arg).eql(new Buffer('0000000048444C4D49524' +
+        should(send.lastCall.arg).eql(Buffer.from('0000000048444C4D49524' +
           '1434C45AAAA0B0132FFFE000401175360', 'hex'));
 
         done(err);
@@ -371,11 +371,11 @@ describe('Bus', function() {
 
   describe('parse', function() {
     it('should not parse invalid message', function() {
-      should(bus.parse(new Buffer('TEST'))).equal(undefined);
+      should(bus.parse(Buffer.from('TEST'))).equal(undefined);
     });
 
     it('should ignore message from another gateway by default', function() {
-      should(bus.parse(new Buffer('C0A801FA48444C4D495241434C45AAAA0E010202' +
+      should(bus.parse(Buffer.from('C0A801FA48444C4D495241434C45AAAA0E010202' +
         '690032FFFF06F864B5A9', 'hex'))).equal(undefined);
     });
 
@@ -385,7 +385,7 @@ describe('Bus', function() {
       bus.on('listening', function() {
         bus.setBroadcast(true);
 
-        var message = new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
+        var message = Buffer.from('C0A801FA48444C4D495241434C45AAAA0E0' +
           '10202690032FFFF06F864B5A9', 'hex');
 
         should(bus.parse(message)).have.properties({
@@ -406,7 +406,7 @@ describe('Bus', function() {
       bus.on('listening', function() {
         bus.setBroadcast(false);
 
-        should(bus.parse(new Buffer('C0A801FA48444C4D495241434C45AAAA0E0' +
+        should(bus.parse(Buffer.from('C0A801FA48444C4D495241434C45AAAA0E0' +
           '10202690032FFFF06F864B5A9', 'hex'))).equal(undefined);
 
         bus.on('close', done);
@@ -420,7 +420,7 @@ describe('Bus', function() {
 
       should(device.type).equal(undefined);
 
-      bus.parse(new Buffer('C000026448444C4D495241434C45AAAA0E010202' +
+      bus.parse(Buffer.from('C000026448444C4D495241434C45AAAA0E010202' +
         '690032FFFF06F864B5A9', 'hex'));
 
       should(device.type).eql(0x0269);
@@ -434,14 +434,14 @@ describe('Bus', function() {
 
       should(device.type).equal(0xFFFE);
 
-      bus.parse(new Buffer('C000026448444C4D495241434C45AAAA0E010202' +
+      bus.parse(Buffer.from('C000026448444C4D495241434C45AAAA0E010202' +
         '690032FFFF06F864B5A9', 'hex'));
 
       should(device.type).eql(0x0269);
     });
 
     it('should return command object', function() {
-      var command = bus.parse(new Buffer('C000026448444C4D495241434C45AAAA0E' +
+      var command = bus.parse(Buffer.from('C000026448444C4D495241434C45AAAA0E' +
         '010202690032FFFF06F864B5A9', 'hex'));
 
       should(command).be.an.instanceOf(Command);
@@ -454,7 +454,7 @@ describe('Bus', function() {
     });
 
     it('should return command object without data', function() {
-      var command = bus.parse(new Buffer('C000026448444C4D49524' +
+      var command = bus.parse(Buffer.from('C000026448444C4D49524' +
           '1434C45AAAA0B0132FFFE000401175360', 'hex'));
 
       should(command).be.an.instanceOf(Command);
@@ -486,7 +486,7 @@ describe('Bus', function() {
         sender: bus.device('1.5'),
         target: bus.device('1.4'),
         data: { channel: 4, level: 100, time: 3 },
-        payload: new Buffer('0464000300', 'hex')
+        payload: Buffer.from('0464000300', 'hex')
       });
 
       should(handler.calls[1].arg).have.properties({
@@ -494,7 +494,7 @@ describe('Bus', function() {
         sender: bus.device('1.2'),
         target: bus.device('255.255'),
         data: { channel: 6, success: true, level: 100 },
-        payload: new Buffer('06F864', 'hex')
+        payload: Buffer.from('06F864', 'hex')
       });
     });
 
@@ -509,7 +509,7 @@ describe('Bus', function() {
         sender: bus.device('1.2'),
         target: bus.device('255.255'),
         data: { channel: 6, success: true, level: 100 },
-        payload: new Buffer('06F864', 'hex')
+        payload: Buffer.from('06F864', 'hex')
       });
     });
 
@@ -524,7 +524,7 @@ describe('Bus', function() {
         sender: bus.device('1.5'),
         target: bus.device('1.4'),
         data: { channel: 4, level: 100, time: 3 },
-        payload: new Buffer('0464000300', 'hex')
+        payload: Buffer.from('0464000300', 'hex')
       });
     });
 
@@ -542,20 +542,20 @@ describe('Bus', function() {
         sender: device,
         target: bus.device('255.255'),
         data: { level: 100, channel: 6, success: true },
-        payload: new Buffer('06F864', 'hex')
+        payload: Buffer.from('06F864', 'hex')
       });
     });
 
     it('should handle invalid message', function() {
       should(function() {
-        bus.socket.emit('message', new Buffer('invalid'));
+        bus.socket.emit('message', Buffer.from('invalid'));
       }).not.throw();
     });
 
     function emitEvents() {
-      bus.socket.emit('message', new Buffer('C000026448444C4D495241434C45AAA' +
+      bus.socket.emit('message', Buffer.from('C000026448444C4D495241434C45AAA' +
         'A10010504550031010404640003000837', 'hex'));
-      bus.socket.emit('message', new Buffer('C000026448444C4D495241434C45AAA' +
+      bus.socket.emit('message', Buffer.from('C000026448444C4D495241434C45AAA' +
         'A0E010202690032FFFF06F864B5A9', 'hex'));
     }
   });

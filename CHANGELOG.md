@@ -1,3 +1,15 @@
+## 0.8.0
+
+  * Update for Node.js v22 compatibility
+  * Replace deprecated `new Buffer()` constructors with modern APIs
+  * Update minimum Node.js version from >=0.12 to >=12.0.0
+  * Update development dependencies (mocha, eslint, should, simple-mock)
+  * Replace istanbul with nyc for test coverage
+
+**BREAKING:**
+
+  - Node.js version requirement increased from >=0.12 to >=12.0.0
+
 ## 0.7.0
 
   * Add Read Dry Contact Status commaands (`0x15CE`, `0x15CF`)
