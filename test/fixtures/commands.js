@@ -395,8 +395,8 @@ module.exports = {
 
   // 7.1.7 Get Curtain Duration Response
   '0xE801': [
-    { payload: Buffer.from('0100001388', 'hex'), data: { channel: 1, duration: 5000 } },
-    { payload: Buffer.from('03000007D0', 'hex'), data: { channel: 3, duration: 2000 } }
+    { payload: Buffer.from('01001388', 'hex'), data: { channel: 1, duration: 5000 } },
+    { payload: Buffer.from('030007D0', 'hex'), data: { channel: 3, duration: 2000 } }
   ],
 
   /* 9. Panel Control */
