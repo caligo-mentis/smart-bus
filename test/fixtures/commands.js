@@ -374,7 +374,8 @@ module.exports = {
   // 7.1.4 Response Read Status of Curtain Switch
   '0xE3E3': [
     { payload: Buffer.from('0102', 'hex'), data: { curtain: 1, status: 2 } },
-    { payload: Buffer.from('115A', 'hex'), data: { curtain: 17, status: 90 } }
+    { payload: Buffer.from('115A', 'hex'), data: { curtain: 17, status: 90 } },
+    { payload: Buffer.from('010201F4', 'hex'), data: { curtain: 1, status: 2, duration: 50.0 } }
   ],
 
   // 7.1.5 Broadcast Status of Status of Curtain Switches
@@ -385,6 +386,18 @@ module.exports = {
       { number: 2, level: 0, status: 1 }
     ] }
   },
+
+  // 7.1.6 Get Curtain Duration Request
+  '0xE800': [
+    { payload: Buffer.from('01', 'hex'), data: { channel: 1 } },
+    { payload: Buffer.from('0A', 'hex'), data: { channel: 10 } }
+  ],
+
+  // 7.1.7 Get Curtain Duration Response
+  '0xE801': [
+    { payload: Buffer.from('0100001388', 'hex'), data: { channel: 1, duration: 5000 } },
+    { payload: Buffer.from('03000007D0', 'hex'), data: { channel: 3, duration: 2000 } }
+  ],
 
   /* 9. Panel Control */
 
@@ -797,6 +810,62 @@ module.exports = {
     {
       payload: Buffer.from('010100', 'hex'),
       data: { area: 1, switch: 1, contact: false }
+    }
+  ],
+
+  // 16.1.5 Dry Contact Multi-Channel Status
+  '0x6F00': [
+    {
+      payload: Buffer.from('01080F00', 'hex'),
+      data: {
+        subnet: 1,
+        declaredChannels: 8,
+        statusMask: 0x0F00,
+        channels: [
+          { number: 1, status: false },
+          { number: 2, status: false },
+          { number: 3, status: false },
+          { number: 4, status: false },
+          { number: 5, status: false },
+          { number: 6, status: false },
+          { number: 7, status: false },
+          { number: 8, status: false },
+          { number: 9, status: true },
+          { number: 10, status: true },
+          { number: 11, status: true },
+          { number: 12, status: true },
+          { number: 13, status: false },
+          { number: 14, status: false },
+          { number: 15, status: false },
+          { number: 16, status: false }
+        ]
+      }
+    },
+    {
+      payload: Buffer.from('0216AA55', 'hex'),
+      data: {
+        subnet: 2,
+        declaredChannels: 22,
+        statusMask: 0xAA55,
+        channels: [
+          { number: 1, status: true },
+          { number: 2, status: false },
+          { number: 3, status: true },
+          { number: 4, status: false },
+          { number: 5, status: true },
+          { number: 6, status: false },
+          { number: 7, status: true },
+          { number: 8, status: false },
+          { number: 9, status: false },
+          { number: 10, status: true },
+          { number: 11, status: false },
+          { number: 12, status: true },
+          { number: 13, status: false },
+          { number: 14, status: true },
+          { number: 15, status: false },
+          { number: 16, status: true }
+        ]
+      }
     }
   ],
 

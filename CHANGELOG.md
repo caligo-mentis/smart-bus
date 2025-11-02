@@ -1,3 +1,11 @@
+## 0.8.1
+
+  * Add Get Curtain Duration commands (`0xE800`, `0xE801`)
+  * Add Dry Contact Multi-Channel Status command (`0x6F00`)
+  * Fix `0xE3E3` Curtain Status to support optional duration field
+  * Add comprehensive test coverage for new commands
+  * Maintain 100% backward compatibility with existing implementations
+
 ## 0.8.0
 
   * Update for Node.js v22 compatibility
