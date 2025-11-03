@@ -1,4 +1,4 @@
-## 0.8.1
+## 0.9.0
 
   * Add Get Curtain Duration commands (`0xE800`, `0xE801`)
   * Add Dry Contact Multi-Channel Status command (`0x6F00`)
