@@ -242,7 +242,7 @@ bus.send({
   target: dimmer,
 
   command: 0x0031,
-  payload: new Buffer('04640190', 'hex')
+  payload: Buffer.from('04640190', 'hex')
 }, function(err) { /* ... */ });
 ```
 

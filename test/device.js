@@ -54,7 +54,7 @@ describe('Device', function() {
   });
 
   it('should send command with payload', function(done) {
-    var payload = new Buffer([1, 2, 3]);
+    var payload = Buffer.from([1, 2, 3]);
     var send = simple.mock(bus, 'send').callback();
 
     device.send({

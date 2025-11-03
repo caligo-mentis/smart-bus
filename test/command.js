@@ -11,7 +11,7 @@ describe('Command', function() {
     data = { level: 100 };
     sender = { subnet: 1, id: 3 };
     target = { subnet: 1, id: 10 };
-    payload = new Buffer([1, 2, 3]);
+    payload = Buffer.from([1, 2, 3]);
 
     simple.mock(sender, 'toString').returnWith('1.3');
     simple.mock(target, 'toString').returnWith('1.10');
@@ -47,7 +47,7 @@ describe('Command', function() {
 
     it('should skip empty payload', function() {
       command = new Command(code, {
-        payload: new Buffer([])
+        payload: Buffer.from([])
       });
 
       should(command).have.properties({
@@ -103,7 +103,7 @@ describe('Command', function() {
         data: data
       });
 
-      var message = new Buffer('0E010300000031010A010203', 'hex');
+      var message = Buffer.from('0E010300000031010A010203', 'hex');
 
       should(encode.firstCall.arg).eql(data);
       should(command.message).eql(message);
@@ -115,7 +115,7 @@ describe('Command', function() {
         target: target
       });
 
-      var message = new Buffer('0B010300000031010A', 'hex');
+      var message = Buffer.from('0B010300000031010A', 'hex');
 
       should(command.message).eql(message);
     });
@@ -180,7 +180,7 @@ describe('Command', function() {
         payload: payload
       });
 
-      var message = new Buffer('0E010300000031010A010203', 'hex');
+      var message = Buffer.from('0E010300000031010A010203', 'hex');
 
       should(command.message).eql(message);
     });
