@@ -293,7 +293,7 @@ module.exports = {
   // 5.1.7 Response Read System Date and Time
   '0xDA01': {
     payload: Buffer.from('F812020C16020E01', 'hex'),
-    data: { success: true, date: new Date(2018, 1, 12, 22, 02, 14) }
+    data: { success: true, date: new Date(2018, 1, 12, 22, 2, 14) }
   },
 
   // 5.1.8 Modify Read System Date and Time
