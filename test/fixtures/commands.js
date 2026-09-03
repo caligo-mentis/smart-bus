@@ -534,20 +534,37 @@ module.exports = {
   ],
 
   // 11.1.3 Control Floor Heating Status
-  '0x1946': {
-    payload: Buffer.from('00010116161412', 'hex'),
-    data: {
-      temperature: {
-        type: 0,
-        normal: 22,
-        day: 22,
-        night: 20,
-        away: 18
-      },
-      status: true,
-      mode: 1
+  '0x1946': [
+    {
+      payload: Buffer.from('0001011616141201', 'hex'),
+      data: {
+        temperature: {
+          type: 0,
+          normal: 22,
+          day: 22,
+          night: 20,
+          away: 18
+        },
+        status: true,
+        mode: 1,
+        timer: 1
+      }
+    },
+    {
+      payload: Buffer.from('00010116161412', 'hex'),
+      data: {
+        temperature: {
+          type: 0,
+          normal: 22,
+          day: 22,
+          night: 20,
+          away: 18
+        },
+        status: true,
+        mode: 1
+      }
     }
-  },
+  ],
 
   // 11.1.4 Response Control Floor Heating Status
   '0x1947': {
