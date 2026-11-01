@@ -1,3 +1,8 @@
+## 0.9.1
+
+  * Add Device Discovery broadcast command (`0x000E`)
+  * Add Floor Heating Extended Temperature commands (`0x7262`, `0x7263`)
+
 ## 0.9.0
 
   * Add Get Curtain Duration commands (`0xE800`, `0xE801`)

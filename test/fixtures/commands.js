@@ -1,4 +1,12 @@
 module.exports = {
+  /* 1. Device Discovery */
+
+  // Device Discovery Broadcast (empty payload)
+  '0x000E': {
+    payload: Buffer.from('', 'hex'),
+    data: undefined
+  },
+
   /* 4.1 Scene */
 
   // 4.1.1 Scene Control
@@ -729,6 +737,20 @@ module.exports = {
         { number: 2, status: false }
       ]
     }
+  },
+
+  /* 11.5 Floor Heating Extended Temperature */
+
+  // 11.5.1 Read Extended Temperature
+  '0x7262': {
+    payload: Buffer.from('03', 'hex'),
+    data: { channel: 3 }
+  },
+
+  // 11.5.2 Response Read Extended Temperature
+  '0x7263': {
+    payload: Buffer.from('03', 'hex'),
+    data: { channel: 3 }
   },
 
   /* 13.1 Read Temperature */
