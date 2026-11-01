@@ -1,3 +1,10 @@
+## Unreleased
+
+  * Parse previously ignored fields of 8in1 (DeviceType315) Sensors Status
+    response (`0xDB01`): `luxRange` and `uvSwitches`
+  * Backward compatible: existing `movement`, `dryContacts` and `delay`
+    fields are unchanged
+
 ## 0.9.0
 
   * Add Get Curtain Duration commands (`0xE800`, `0xE801`)
