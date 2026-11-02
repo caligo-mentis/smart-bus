@@ -1,3 +1,9 @@
+## Unreleased
+
+  * Tolerate short `0xE801` Get Curtain Duration Response payloads that
+    carry no duration field: return the channel only instead of throwing
+    a buffer range error
+
 ## 0.9.0
 
   * Add Get Curtain Duration commands (`0xE800`, `0xE801`)

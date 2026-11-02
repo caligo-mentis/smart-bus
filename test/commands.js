@@ -20,6 +20,10 @@ describe('Commands', function() {
 
       it('should encode data', function() {
         examples.forEach(function(example) {
+          // parseOnly examples have no canonical encoding (wire variants
+          // only observed on responses)
+          if (example.parseOnly) return;
+
           should(command.encode(example.data)).eql(example.payload);
         });
       });

@@ -396,7 +396,12 @@ module.exports = {
   // 7.1.7 Get Curtain Duration Response
   '0xE801': [
     { payload: Buffer.from('01001388', 'hex'), data: { channel: 1, duration: 5000 } },
-    { payload: Buffer.from('030007D0', 'hex'), data: { channel: 3, duration: 2000 } }
+    { payload: Buffer.from('030007D0', 'hex'), data: { channel: 3, duration: 2000 } },
+    // Some curtain modules answer with a shorter payload that carries
+    // no duration field; there is no canonical encoding for that variant
+    { payload: Buffer.from('01001E', 'hex'), data: { channel: 1 }, parseOnly: true },
+    { payload: Buffer.from('0200', 'hex'), data: { channel: 2 }, parseOnly: true },
+    { payload: Buffer.from('03', 'hex'), data: { channel: 3 }, parseOnly: true }
   ],
 
   /* 9. Panel Control */
