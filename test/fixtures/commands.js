@@ -600,19 +600,69 @@ module.exports = {
   ],
 
   // 11.2.2 Response Read Floor Heating Status
-  '0x1C5F': {
-    payload: Buffer.from('012100021818161400011E010A', 'hex'),
-    data: {
-      channel: 1,
-      work: { type: 2, status: true },
-      temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
-      mode: 2,
-      timer: 0,
-      valve: true,
-      PWD: 30,
-      watering: { type: 0, status: true, time: 10 }
+  // The first example is synthetic; the others are captured from a real
+  // type 213 module with the mode switched in HDL Setup Tool (and, for the
+  // last one, current temperature and output cross-checked against Setup
+  // Tool's 21 °C and "Current Value" of 100%). All examples round-trip.
+  '0x1C5F': [
+    {
+      payload: Buffer.from('0121000218181614000101140000', 'hex'),
+      data: {
+        channel: 1,
+        work: { status: true },
+        heatingPowerMode: true,
+        temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20, current: 1 },
+        mode: 2,
+        timer: 0,
+        valve: true,
+        output: 20
+      }
+    },
+    {
+      // same channel in normal "Floor Heating" mode; current temperature
+      // 0x80 = no sensor connected
+      payload: Buffer.from('01010001050A0A0A008000140000', 'hex'),
+      data: {
+        channel: 1,
+        work: { status: true },
+        heatingPowerMode: false,
+        temperature: { type: 0, normal: 5, day: 10, night: 10, away: 10, current: 0x80 },
+        mode: 1,
+        timer: 0,
+        valve: false,
+        output: 20
+      }
+    },
+    {
+      // same channel switched back to "Heating power" mode
+      payload: Buffer.from('01210001050A0A0A008000140000', 'hex'),
+      data: {
+        channel: 1,
+        work: { status: true },
+        heatingPowerMode: true,
+        temperature: { type: 0, normal: 5, day: 10, night: 10, away: 10, current: 0x80 },
+        mode: 1,
+        timer: 0,
+        valve: false,
+        output: 20
+      }
+    },
+    {
+      // normal mode, Timing Flush disabled, current temperature 21 °C
+      // and output 100% cross-checked in Setup Tool
+      payload: Buffer.from('0301000119191919001501640000', 'hex'),
+      data: {
+        channel: 3,
+        work: { status: true },
+        heatingPowerMode: false,
+        temperature: { type: 0, normal: 25, day: 25, night: 25, away: 25, current: 21 },
+        mode: 1,
+        timer: 0,
+        valve: true,
+        output: 100
+      }
     }
-  },
+  ],
 
   // 11.2.3 Control Floor Heating Status
   '0x1C5C': {
