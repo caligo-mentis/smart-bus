@@ -1,5 +1,6 @@
 ## 0.10.0
 
+  * Accept the optional timer byte in `0x1946`
   * Add Device Discovery broadcast command (`0x000E`)
   * Add Floor Heating Extended Temperature commands (`0x7262`, `0x7263`)
   * Parse previously ignored fields of 8in1 (DeviceType315) Sensors Status
