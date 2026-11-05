@@ -5,25 +5,24 @@
   "description": "Node.js implementation of HDL SmartBus protocol",
   "repository": "caligo-mentis/smart-bus",
   "author": "Andrey Ivaschenko <andrey.ivashchenko@gmail.com>",
-
   "main": "index.js",
   "scripts": {
     "test": "mocha",
     "lint": "eslint lib test",
     "coverage": "nyc mocha"
   },
-
   "dependencies": {
     "crc": "~3.4",
     "debug": "~2.6"
   },
-
   "devDependencies": {
     "mocha": "^12.0.3",
+    "nyc": "^17.1.0",
     "eslint": "^8.57.0",
     "should": "^13.2.3",
     "simple-mock": "^0.8.0"
   },
-
-  "engines": { "node": ">=12.0.0" }
+  "engines": {
+    "node": ">=12.0.0"
+  }
 }
