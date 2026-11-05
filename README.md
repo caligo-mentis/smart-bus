@@ -1,4 +1,4 @@
-## SmartBus [![Build Status](https://travis-ci.org/caligo-mentis/smart-bus.svg)](https://travis-ci.org/caligo-mentis/smart-bus)
+## SmartBus [![CI](https://github.com/caligo-mentis/smart-bus/actions/workflows/ci.yml/badge.svg)](https://github.com/caligo-mentis/smart-bus/actions/workflows/ci.yml)
 
 Node.js implementation of HDL SmartBus protocol http://hdlautomation.com
 
