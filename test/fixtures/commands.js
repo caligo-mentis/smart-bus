@@ -649,17 +649,40 @@ module.exports = {
   ],
 
   // 12.1.2 Response Read Sensors Status
-  '0xDB01': {
-    payload: Buffer.from('010000010000012C', 'hex'),
-    data: {
-      movement: true,
-      delay: 300,
-      dryContacts: [
-        { number: 1, status: true },
-        { number: 2, status: false }
-      ]
+  '0xDB01': [
+    {
+      payload: Buffer.from('010000010000012C', 'hex'),
+      data: {
+        luxRange: false,
+        movement: true,
+        uvSwitches: [
+          { number: 1, command: 0 },
+          { number: 2, command: 0 }
+        ],
+        delay: 300,
+        dryContacts: [
+          { number: 1, status: true },
+          { number: 2, status: false }
+        ]
+      }
+    },
+    {
+      payload: Buffer.from('010101000201012C', 'hex'),
+      data: {
+        luxRange: true,
+        movement: false,
+        uvSwitches: [
+          { number: 1, command: 2 },
+          { number: 2, command: 1 }
+        ],
+        delay: 300,
+        dryContacts: [
+          { number: 1, status: true },
+          { number: 2, status: true }
+        ]
+      }
     }
-  },
+  ],
 
   /* 12.2 Read Sensors Status (8in1 DeviceType314) */
 
