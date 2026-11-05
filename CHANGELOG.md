@@ -1,4 +1,4 @@
-## Unreleased
+## 0.10.0
 
   * Add Device Discovery broadcast command (`0x000E`)
   * Add Floor Heating Extended Temperature commands (`0x7262`, `0x7263`)
