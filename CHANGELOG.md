@@ -14,6 +14,7 @@
   * byte 9 is the current temperature (not a valve flag),
     now exposed as a raw number `temperature.current` (observed `0x80`
     when no sensor is connected)
+  * `valve` now reads byte 10 (was byte 9) and `PWD` (byte 10) removed
 
 ## 0.10.0
 
