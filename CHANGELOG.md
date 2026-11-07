@@ -8,8 +8,9 @@
 
 **BREAKING:** 
 
-  * `work.type` removed (captures show it only mirrored the
-    mode bit) and `watering` removed (byte 11 is the output percentage);
+  * `work.type` removed from `0x1C5F`, `0x1C5C` and `0x1C5D` in favor of
+    `heatingPowerMode` (captures show it only mirrored the mode bit)
+  * `0x1C5F`: `watering` removed (byte 11 is the output percentage);
     byte 12's meaning is unknown and always observed as `0x00`
   * byte 9 is the current temperature (not a valve flag),
     now exposed as a raw number `temperature.current` (observed `0x80`

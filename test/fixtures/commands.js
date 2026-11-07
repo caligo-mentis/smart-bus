@@ -669,7 +669,8 @@ module.exports = {
     payload: Buffer.from('0121000218181614010A', 'hex'),
     data: {
       channel: 1,
-      work: { type: 2, status: true },
+      work: { status: true },
+      heatingPowerMode: true,
       temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
       mode: 2,
       valve: true,
@@ -682,7 +683,8 @@ module.exports = {
     payload: Buffer.from('0121000218181614010A', 'hex'),
     data: {
       channel: 1,
-      work: { type: 2, status: true },
+      work: { status: true },
+      heatingPowerMode: true,
       temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
       mode: 2,
       valve: true,
