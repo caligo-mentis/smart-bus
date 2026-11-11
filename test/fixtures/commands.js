@@ -609,8 +609,7 @@ module.exports = {
       payload: Buffer.from('0121000218181614000101140000', 'hex'),
       data: {
         channel: 1,
-        work: { status: true },
-        heatingPowerMode: true,
+        work: { type: 2, status: true },
         temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20, current: 1 },
         mode: 2,
         timer: 0,
@@ -624,8 +623,7 @@ module.exports = {
       payload: Buffer.from('01010001050A0A0A008000140000', 'hex'),
       data: {
         channel: 1,
-        work: { status: true },
-        heatingPowerMode: false,
+        work: { type: 0, status: true },
         temperature: { type: 0, normal: 5, day: 10, night: 10, away: 10, current: 0x80 },
         mode: 1,
         timer: 0,
@@ -638,8 +636,7 @@ module.exports = {
       payload: Buffer.from('01210001050A0A0A008000140000', 'hex'),
       data: {
         channel: 1,
-        work: { status: true },
-        heatingPowerMode: true,
+        work: { type: 2, status: true },
         temperature: { type: 0, normal: 5, day: 10, night: 10, away: 10, current: 0x80 },
         mode: 1,
         timer: 0,
@@ -653,8 +650,7 @@ module.exports = {
       payload: Buffer.from('0301000119191919001501640000', 'hex'),
       data: {
         channel: 3,
-        work: { status: true },
-        heatingPowerMode: false,
+        work: { type: 0, status: true },
         temperature: { type: 0, normal: 25, day: 25, night: 25, away: 25, current: 21 },
         mode: 1,
         timer: 0,
@@ -665,26 +661,38 @@ module.exports = {
   ],
 
   // 11.2.3 Control Floor Heating Status
-  '0x1C5C': {
-    payload: Buffer.from('0121000218181614010A', 'hex'),
-    data: {
-      channel: 1,
-      work: { status: true },
-      heatingPowerMode: true,
-      temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
-      mode: 2,
-      valve: true,
-      watering: { time: 10 }
+  '0x1C5C': [
+    {
+      payload: Buffer.from('0121000218181614010A', 'hex'),
+      data: {
+        channel: 1,
+        work: { type: 2, status: true },
+        temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
+        mode: 2,
+        valve: true,
+        watering: { time: 10 }
+      }
+    },
+    {
+      // Cooling, which a heating power flag can't tell from heating
+      payload: Buffer.from('0111000218181614010A', 'hex'),
+      data: {
+        channel: 1,
+        work: { type: 1, status: true },
+        temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
+        mode: 2,
+        valve: true,
+        watering: { time: 10 }
+      }
     }
-  },
+  ],
 
   // 11.2.4 Response Control Floor Heating Status
   '0x1C5D': {
     payload: Buffer.from('0121000218181614010A', 'hex'),
     data: {
       channel: 1,
-      work: { status: true },
-      heatingPowerMode: true,
+      work: { type: 2, status: true },
       temperature: { type: 0, normal: 24, day: 24, night: 22, away: 20 },
       mode: 2,
       valve: true,

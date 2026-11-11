@@ -1,15 +1,13 @@
 ## Unreleased
 
   * Fix `0x1C5F` Read Floor Heating Status Response parsing, verified
-    against captures of a real type 213 module: byte 1 bit `0x20` is the
-    control mode flag, now exposed as `heatingPowerMode` (true = "Heating
-    power" / PWM, false = normal floor heating); byte 11 is the current
-    output percentage, now exposed as `output`
+    against captures of a real type 213 module: byte 11 is the current
+    output percentage, now exposed as `output`. `work.type` 2 is "Heating
+    power" / PWM and 0 normal floor heating, 1 and 3 are cooling and
+    cooling power output as documented
 
 **BREAKING:** 
 
-  * `work.type` removed from `0x1C5F`, `0x1C5C` and `0x1C5D` in favor of
-    `heatingPowerMode` (captures show it only mirrored the mode bit)
   * `0x1C5F`: `watering` removed (byte 11 is the output percentage);
     byte 12's meaning is unknown and always observed as `0x00`
   * byte 9 is the current temperature (not a valve flag),
